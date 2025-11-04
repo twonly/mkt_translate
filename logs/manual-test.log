@@ -1,0 +1,20 @@
+==== 2025-11-03 23:54:24 /api/health ====
+
+==== 2025-11-03 23:54:54 /api/translate ====
+
+==== 2025-11-03 23:57:46 /api/health ====
+
+==== 2025-11-03 23:57:58 /api/translate ====
+
+==== 2025-11-04 00:15:58 /api/health ====
+{"status":"ok","deepseekApiKeyPresent":true,"timestamp":"2025-11-03T16:15:58.523Z"}
+==== 2025-11-04 00:16:11 /api/translate ====
+{"record":{"id":"c4392dbf-f51c-4743-bf93-cfbe532e50b1","createdAt":"2025-11-03T16:16:12.750Z","starred":false,"sourceText":"We are preparing the AI translation platform for public launch.","targetLanguage":"zh-CN","model":"deepseek-chat","domain":"市场营销","tone":"专业且友好","audience":"品牌团队","promptTemplate":"你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}","promptVariables":{"sourceText":"We are preparing the AI translation platform for public launch.","targetLanguage":"zh-CN","tone":"专业且友好","audience":"品牌团队","domain":"市场营销","glossary":""},"translation":{"text":"我们正在为AI翻译平台的公开上线做准备工作。","metadata":{"usage":{"prompt_tokens":103,"completion_tokens":11,"total_tokens":114,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":39},"durationMs":1600,"temperature":0.2,"isMock":false}},"evaluation":null,"userNote":""},"meta":{"prompt":"你是一名专业翻译专家，请将以下原文翻译成zh-CN，面向品牌团队。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用专业且友好语气，符合市场营销领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\nWe are preparing the AI translation platform for public launch."}}
+==== 2025-11-04 00:16:23 /api/evaluate ====
+{"evaluation":{"scores":{"accuracy":5,"fluency":5,"toneConsistency":5,"terminologyAndFormat":5},"issues":[],"overall_comment":"译文准确传达了原文含义，语言流畅自然，语气与原文一致，术语使用恰当，格式规范，质量优秀。","recommendation":"accept"},"metadata":{"usage":{"prompt_tokens":233,"completion_tokens":105,"total_tokens":338,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":41},"durationMs":4618,"isMock":false},"record":{"id":"c4392dbf-f51c-4743-bf93-cfbe532e50b1","createdAt":"2025-11-03T16:16:12.750Z","starred":false,"sourceText":"We are preparing the AI translation platform for public launch.","targetLanguage":"zh-CN","model":"deepseek-chat","domain":"市场营销","tone":"专业且友好","audience":"品牌团队","promptTemplate":"你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}","promptVariables":{"sourceText":"We are preparing the AI translation platform for public launch.","targetLanguage":"zh-CN","tone":"专业且友好","audience":"品牌团队","domain":"市场营销","glossary":""},"translation":{"text":"我们正在为AI翻译平台的公开上线做准备工作。","metadata":{"usage":{"prompt_tokens":103,"completion_tokens":11,"total_tokens":114,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":39},"durationMs":1600,"temperature":0.2,"isMock":false}},"evaluation":{"scores":{"accuracy":5,"fluency":5,"toneConsistency":5,"terminologyAndFormat":5},"issues":[],"overall_comment":"译文准确传达了原文含义，语言流畅自然，语气与原文一致，术语使用恰当，格式规范，质量优秀。","recommendation":"accept","metadata":{"usage":{"prompt_tokens":233,"completion_tokens":105,"total_tokens":338,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":41},"durationMs":4618,"isMock":false}},"userNote":"","updatedAt":"2025-11-03T16:16:28.152Z"}}
+==== 2025-11-04 00:21:22 /api/history/export?format=json saved to exports/history-export.json ====
+# NOTE: Earlier entries without response corresponded to initial server boot failure on Express wildcard route; subsequent entries reflect successful calls.
+==== 2025-11-04 00:44:40 revalidation summary ====
+
+
+

@@ -1,0 +1,403 @@
+[
+  {
+    "id": "f5fb081f-7c38-4e2a-8260-3bf1c5ee885e",
+    "createdAt": "2025-11-04T14:04:23.463Z",
+    "starred": false,
+    "sourceText": "我是个最优秀的程序员，用vibe coding帮我完成一切的工作",
+    "targetLanguage": "ja-JP",
+    "model": "deepseek-chat",
+    "domain": "技术文档",
+    "tone": "专业且友好",
+    "audience": "目标受众",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "我是个最优秀的程序员，用vibe coding帮我完成一切的工作",
+      "targetLanguage": "ja-JP",
+      "tone": "专业且友好",
+      "audience": "目标受众",
+      "domain": "技术文档",
+      "glossary": ""
+    },
+    "glossary": "",
+    "translation": {
+      "text": "私は最高のプログラマーで、vibe codingを使ってすべての仕事を完璧にこなします。",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 106,
+          "completion_tokens": 23,
+          "total_tokens": 129,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 106
+        },
+        "durationMs": 1796,
+        "temperature": 0.3,
+        "isMock": false
+      }
+    },
+    "evaluation": null,
+    "userNote": ""
+  },
+  {
+    "id": "60580770-da2e-4597-8349-64fc592edeb0",
+    "createdAt": "2025-11-04T14:01:26.149Z",
+    "starred": false,
+    "sourceText": "华为AP路由器，最顶尖的性能，支持100路上行，20路下行，多端口，多制式，多频道，支持5G。",
+    "targetLanguage": "ja-JP",
+    "model": "deepseek-chat",
+    "domain": "市场营销",
+    "tone": "专业且友好",
+    "audience": "目标受众",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "华为AP路由器，最顶尖的性能，支持100路上行，20路下行，多端口，多制式，多频道，支持5G。",
+      "targetLanguage": "ja-JP",
+      "tone": "专业且友好",
+      "audience": "目标受众",
+      "domain": "市场营销",
+      "glossary": ""
+    },
+    "glossary": "",
+    "translation": {
+      "text": "华为APルーター、最高峰の性能を実現。100路上行、20路下行に対応し、マルチポート、マルチモード、マルチチャネルを備え、5G通信をサポートします。",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 123,
+          "completion_tokens": 53,
+          "total_tokens": 176,
+          "prompt_tokens_details": {
+            "cached_tokens": 64
+          },
+          "prompt_cache_hit_tokens": 64,
+          "prompt_cache_miss_tokens": 59
+        },
+        "durationMs": 3076,
+        "temperature": 0.3,
+        "isMock": false
+      }
+    },
+    "evaluation": {
+      "scores": {
+        "accuracy": 4.5,
+        "fluency": 4.8,
+        "toneConsistency": 4.7,
+        "terminologyAndFormat": 4.6
+      },
+      "issues": [
+        {
+          "type": "accuracy",
+          "excerpt": "华为AP路由器 → 华为APルーター",
+          "comment": "「AP路由器」应译为「APルーター」或更准确的「APルータ」（日语中路由器通常用「ルータ」），当前译法「ルーター」虽可接受但非最标准术语，建议统一为「APルータ」以符合技术文档惯例。"
+        },
+        {
+          "type": "terminology",
+          "excerpt": "多制式 → マルチモード",
+          "comment": "「多制式」在通信语境中更常指多种通信标准（如4G/5G/Wi-Fi），译为「マルチモード」可能被误解为设备模式（如客户端/AP模式），建议改为「マルチスタンダード」或明确译为「複数通信方式」以增强准确性。"
+        }
+      ],
+      "overall_comment": "译文整体质量较高，准确传达了原文的技术参数与功能特点，句式流畅自然，语气与原文宣传风格一致。主要问题在于个别术语的精准度可进一步提升，但不影响核心信息理解。",
+      "recommendation": "accept",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 295,
+          "completion_tokens": 321,
+          "total_tokens": 616,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "prompt_cache_hit_tokens": 192,
+          "prompt_cache_miss_tokens": 103
+        },
+        "durationMs": 12819,
+        "isMock": false
+      }
+    },
+    "userNote": "多制式 → マルチモード\n华为AP路由器 → 华为APルーター",
+    "updatedAt": "2025-11-04T14:02:25.335Z"
+  },
+  {
+    "id": "0b7619a1-b1df-4bbb-9f7a-abe4bf0d38d1",
+    "createdAt": "2025-11-04T13:52:43.869Z",
+    "starred": true,
+    "sourceText": "我是个最优秀的程序员，用vibe coding帮我完成一切的工作",
+    "targetLanguage": "ja-JP",
+    "model": "deepseek-chat",
+    "domain": "市场营销",
+    "tone": "专业且友好",
+    "audience": "目标受众",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "我是个最优秀的程序员，用vibe coding帮我完成一切的工作",
+      "targetLanguage": "ja-JP",
+      "tone": "专业且友好",
+      "audience": "目标受众",
+      "domain": "市场营销",
+      "glossary": ""
+    },
+    "glossary": "",
+    "translation": {
+      "text": "私は最高のプログラマーで、vibe codingを活用して全ての仕事を完璧に遂行します",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 105,
+          "completion_tokens": 24,
+          "total_tokens": 129,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 105
+        },
+        "durationMs": 1942,
+        "temperature": 0.3,
+        "isMock": false
+      }
+    },
+    "evaluation": {
+      "scores": {
+        "accuracy": 4.5,
+        "fluency": 4.8,
+        "toneConsistency": 4.7,
+        "terminologyAndFormat": 4
+      },
+      "issues": [
+        {
+          "type": "terminology",
+          "excerpt": "vibe coding",
+          "comment": "原文中的'vibe coding'在译文中直接保留为'vibe coding'，建议根据上下文判断是否为专有名词或特定术语。如果是新兴术语，可考虑添加注释说明；如果是普通表达，建议译为'氛围编程'或'感觉编程'等更符合日语表达习惯的译法。"
+        },
+        {
+          "type": "accuracy",
+          "excerpt": "完璧に遂行します",
+          "comment": "原文'帮我完成一切的工作'更强调'协助完成'的含义，译文'完璧に遂行します'（完美地执行）稍显过度翻译，建议改为'全ての仕事を手伝って完成させます'更贴近原意。"
+        }
+      ],
+      "overall_comment": "译文整体质量较高，语言流畅自然，语气与原文自信的口吻保持一致。主要问题在于术语处理和部分表达的准确性，建议对'vibe coding'进行术语确认，并微调完成工作的表达方式。",
+      "recommendation": "human_review",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 249,
+          "completion_tokens": 306,
+          "total_tokens": 555,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "prompt_cache_hit_tokens": 192,
+          "prompt_cache_miss_tokens": 57
+        },
+        "durationMs": 12067,
+        "isMock": false
+      }
+    },
+    "userNote": "Test 备注",
+    "updatedAt": "2025-11-04T13:58:35.668Z"
+  },
+  {
+    "id": "f12002ea-0f68-434b-8996-92d91c9a25aa",
+    "createdAt": "2025-11-03T16:43:36.684Z",
+    "starred": false,
+    "sourceText": "Hello again, testing translation",
+    "targetLanguage": "zh-CN",
+    "model": "deepseek-chat",
+    "domain": "市场营销",
+    "tone": "专业且友好",
+    "audience": "品牌团队",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "Hello again, testing translation",
+      "targetLanguage": "zh-CN",
+      "tone": "专业且友好",
+      "audience": "品牌团队",
+      "domain": "市场营销",
+      "glossary": ""
+    },
+    "translation": {
+      "text": "再次问候，测试翻译",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 97,
+          "completion_tokens": 5,
+          "total_tokens": 102,
+          "prompt_tokens_details": {
+            "cached_tokens": 64
+          },
+          "prompt_cache_hit_tokens": 64,
+          "prompt_cache_miss_tokens": 33
+        },
+        "durationMs": 1614,
+        "temperature": 0.2,
+        "isMock": false
+      }
+    },
+    "evaluation": {
+      "scores": {
+        "accuracy": 5,
+        "fluency": 4.5,
+        "toneConsistency": 4.5,
+        "terminologyAndFormat": 5
+      },
+      "issues": [
+        {
+          "type": "fluency",
+          "excerpt": "再次问候，测试翻译",
+          "comment": "译文略显生硬，建议调整为更自然的表达，如“再次问候，正在测试翻译”或“你好，翻译测试中”"
+        },
+        {
+          "type": "tone",
+          "excerpt": "再次问候，测试翻译",
+          "comment": "语气稍显正式，与原文的简洁口语风格略有偏差，可调整为更轻松的口吻，如“你好，测试翻译”"
+        }
+      ],
+      "overall_comment": "译文准确传达了原文信息，术语和格式无误，但在流畅度和语气自然度上有小幅提升空间。整体质量良好，基本达到直接使用标准。",
+      "recommendation": "accept",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 222,
+          "completion_tokens": 230,
+          "total_tokens": 452,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "prompt_cache_hit_tokens": 192,
+          "prompt_cache_miss_tokens": 30
+        },
+        "durationMs": 9184,
+        "isMock": false
+      }
+    },
+    "userNote": "",
+    "updatedAt": "2025-11-03T16:44:15.410Z"
+  },
+  {
+    "id": "c4392dbf-f51c-4743-bf93-cfbe532e50b1",
+    "createdAt": "2025-11-03T16:16:12.750Z",
+    "starred": false,
+    "sourceText": "We are preparing the AI translation platform for public launch.",
+    "targetLanguage": "zh-CN",
+    "model": "deepseek-chat",
+    "domain": "市场营销",
+    "tone": "专业且友好",
+    "audience": "品牌团队",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "We are preparing the AI translation platform for public launch.",
+      "targetLanguage": "zh-CN",
+      "tone": "专业且友好",
+      "audience": "品牌团队",
+      "domain": "市场营销",
+      "glossary": ""
+    },
+    "translation": {
+      "text": "我们正在为AI翻译平台的公开上线做准备工作。",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 103,
+          "completion_tokens": 11,
+          "total_tokens": 114,
+          "prompt_tokens_details": {
+            "cached_tokens": 64
+          },
+          "prompt_cache_hit_tokens": 64,
+          "prompt_cache_miss_tokens": 39
+        },
+        "durationMs": 1600,
+        "temperature": 0.2,
+        "isMock": false
+      }
+    },
+    "evaluation": {
+      "scores": {
+        "accuracy": 5,
+        "fluency": 5,
+        "toneConsistency": 5,
+        "terminologyAndFormat": 5
+      },
+      "issues": [],
+      "overall_comment": "译文准确传达了原文含义，语言流畅自然，语气与原文一致，术语使用恰当，格式规范，质量优秀。",
+      "recommendation": "accept",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 233,
+          "completion_tokens": 105,
+          "total_tokens": 338,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "prompt_cache_hit_tokens": 192,
+          "prompt_cache_miss_tokens": 41
+        },
+        "durationMs": 4618,
+        "isMock": false
+      }
+    },
+    "userNote": "",
+    "updatedAt": "2025-11-03T16:16:28.152Z"
+  },
+  {
+    "id": "1123cdc3-df63-4978-b9bb-bf1ad489d49d",
+    "createdAt": "2025-11-03T16:15:26.928Z",
+    "starred": false,
+    "sourceText": "Hello, welcome to the AI translation platform.",
+    "targetLanguage": "zh-CN",
+    "model": "deepseek-chat",
+    "domain": "市场营销",
+    "tone": "专业且友好",
+    "audience": "品牌团队",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "Hello, welcome to the AI translation platform.",
+      "targetLanguage": "zh-CN",
+      "tone": "专业且友好",
+      "audience": "品牌团队",
+      "domain": "市场营销",
+      "glossary": ""
+    },
+    "translation": {
+      "text": "您好，欢迎使用AI翻译平台。",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 101,
+          "completion_tokens": 8,
+          "total_tokens": 109,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 101
+        },
+        "durationMs": 1104,
+        "temperature": 0.2,
+        "isMock": false
+      }
+    },
+    "evaluation": {
+      "scores": {
+        "accuracy": 5,
+        "fluency": 5,
+        "toneConsistency": 5,
+        "terminologyAndFormat": 5
+      },
+      "issues": [],
+      "overall_comment": "译文准确传达了原文的问候和平台介绍，语言流畅自然，语气与原文一致，术语使用恰当，格式规范，无需修改。",
+      "recommendation": "accept",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 228,
+          "completion_tokens": 109,
+          "total_tokens": 337,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 228
+        },
+        "durationMs": 4642,
+        "isMock": false
+      }
+    },
+    "userNote": "",
+    "updatedAt": "2025-11-03T16:15:39.266Z"
+  }
+]

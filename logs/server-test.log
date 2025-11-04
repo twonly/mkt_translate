@@ -1,0 +1,7 @@
+[dotenv@17.2.3] injecting env (0) from .env -- tip: ⚙️  override existing env vars with { override: true }
+Server listening on http://localhost:3100
+[2025-11-03T16:43:29.989Z] [32minfo[39m: HTTP GET /api/health 200 12ms {"method":"GET","url":"/api/health","status":200,"durationMs":12,"ip":"::1"}
+[2025-11-03T16:43:36.682Z] [32minfo[39m: translation.success {"targetLanguage":"zh-CN","model":"deepseek-chat","durationMs":1614,"mock":false,"tokenUsage":{"prompt_tokens":97,"completion_tokens":5,"total_tokens":102,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":33}}
+[2025-11-03T16:43:36.685Z] [32minfo[39m: HTTP POST /api/translate 200 1617ms {"method":"POST","url":"/api/translate","status":200,"durationMs":1617,"ip":"::1"}
+[2025-11-03T16:44:15.408Z] [32minfo[39m: evaluation.success {"recordId":"f12002ea-0f68-434b-8996-92d91c9a25aa","model":"deepseek-chat","durationMs":9184,"mock":false}
+[2025-11-03T16:44:15.411Z] [32minfo[39m: HTTP POST /api/evaluate 200 9190ms {"method":"POST","url":"/api/evaluate","status":200,"durationMs":9190,"ip":"::1"}

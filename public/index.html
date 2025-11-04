@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DeepSeek AI 翻译工作台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <div>
+        <h1>DeepSeek AI 翻译工作台</h1>
+        <p class="subtitle">原文 → Prompt → LLM 翻译 → AI 评估 → 历史留存</p>
+      </div>
+      <div class="status" id="status-message"></div>
+    </header>
+
+    <main class="layout">
+      <section class="workspace">
+        <div class="card">
+          <div class="card-header">
+            <h2>翻译配置</h2>
+            <div class="card-actions">
+              <button id="save-defaults-btn" class="secondary">保存默认设置</button>
+              <button id="reset-prompt-btn" class="ghost">重置 Prompt</button>
+            </div>
+          </div>
+          <form id="translate-form" class="form">
+            <label class="form-field">
+              <span>原始内容</span>
+              <textarea
+                id="source-text"
+                rows="8"
+                placeholder="粘贴或输入需要翻译的原文..."
+                required
+              ></textarea>
+            </label>
+            <div class="form-grid">
+              <label class="form-field">
+                <span>目标语言</span>
+                <select id="target-language" required></select>
+              </label>
+              <label class="form-field">
+                <span>翻译模型</span>
+                <select id="model" required></select>
+              </label>
+              <label class="form-field">
+                <span>领域标签</span>
+                <input
+                  id="domain"
+                  list="domain-options"
+                  placeholder="例如：市场营销、技术文档"
+                />
+                <datalist id="domain-options"></datalist>
+              </label>
+              <label class="form-field">
+                <span>语气要求</span>
+                <input id="tone" placeholder="如：专业且友好" />
+              </label>
+              <label class="form-field">
+                <span>目标受众</span>
+                <input id="audience" placeholder="如：品牌全球市场团队" />
+              </label>
+              <label class="form-field">
+                <span>温度</span>
+                <input
+                  id="temperature"
+                  type="number"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  value="0.3"
+                />
+              </label>
+            </div>
+            <label class="form-field">
+              <span>术语表（可选）</span>
+              <textarea
+                id="glossary"
+                rows="3"
+                placeholder="一行一个术语对，例如：BrandX=品牌X"
+              ></textarea>
+            </label>
+            <label class="form-field">
+              <span>Prompt</span>
+              <textarea id="prompt" rows="6"></textarea>
+            </label>
+            <footer class="form-actions">
+              <button type="submit" id="translate-btn" class="primary">
+                立即翻译
+              </button>
+            </footer>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>翻译结果</h2>
+          </div>
+          <div id="translation-result" class="translation-result">
+            <p class="placeholder">完成翻译后将在此展示译文。</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>质量评估</h2>
+            <div class="card-actions">
+              <button id="evaluate-btn" class="secondary" disabled>
+                评估翻译
+              </button>
+            </div>
+          </div>
+          <div id="evaluation-result" class="evaluation-result">
+            <p class="placeholder">点击“评估翻译”查看多维度评分。</p>
+          </div>
+          <div class="note-editor">
+            <label class="form-field">
+              <span>备注</span>
+              <textarea
+                id="note-input"
+                rows="2"
+                placeholder="记录人工复核要点或补充说明..."
+              ></textarea>
+            </label>
+            <button id="save-note-btn" class="ghost" disabled>
+              保存备注
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="history-panel">
+        <div class="card">
+          <div class="card-header">
+            <h2>历史记录</h2>
+          </div>
+          <div class="history-controls">
+            <input
+              type="search"
+              id="history-search"
+              placeholder="搜索原文、译文或备注..."
+            />
+            <label class="toggle">
+              <input type="checkbox" id="star-filter" />
+              <span>仅看星标</span>
+            </label>
+            <div class="history-export">
+              <button id="export-json-btn" class="ghost small">导出JSON</button>
+              <button id="export-csv-btn" class="ghost small">导出CSV</button>
+            </div>
+          </div>
+          <div id="history-list" class="history-list">
+            <p class="placeholder">暂无历史记录。</p>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>DeepSeek API Key 通过环境变量配置 · 支持自定义 Prompt、术语表与多模型评估流程</span>
+    </footer>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
