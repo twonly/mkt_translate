@@ -1,5 +1,136 @@
 [
   {
+    "id": "cf48a9df-cfba-450d-8bd3-e1333f18db83",
+    "createdAt": "2025-11-04T15:31:19.882Z",
+    "starred": false,
+    "sourceText": "ICT产业的云原生产品，支持10000X容器部署，应用持续集成，无感升级",
+    "targetLanguage": "ja-JP",
+    "model": "deepseek-chat",
+    "domain": "通用",
+    "tone": "专业且友好",
+    "audience": "目标受众",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "ICT产业的云原生产品，支持10000X容器部署，应用持续集成，无感升级",
+      "targetLanguage": "ja-JP",
+      "tone": "专业且友好",
+      "audience": "目标受众",
+      "domain": "通用",
+      "glossary": ""
+    },
+    "glossary": "",
+    "glossaryLibrary": {
+      "id": "it-zh-ja",
+      "name": "IT 技术术语库",
+      "domain": "信息技术",
+      "direction": {
+        "source": "zh-CN",
+        "target": "ja-JP"
+      },
+      "description": "软件开发、云计算常用技术词汇（日文）。",
+      "termsCount": 10
+    },
+    "glossarySnapshot": [
+      {
+        "source": "云原生",
+        "target": "クラウドネイティブ"
+      },
+      {
+        "source": "容器化",
+        "target": "コンテナ化"
+      },
+      {
+        "source": "持续集成",
+        "target": "継続的インテグレーション"
+      },
+      {
+        "source": "微服务",
+        "target": "マイクロサービス"
+      },
+      {
+        "source": "服务网格",
+        "target": "サービスメッシュ"
+      },
+      {
+        "source": "可观测性",
+        "target": "オブザーバビリティ"
+      },
+      {
+        "source": "回滚策略",
+        "target": "ロールバック戦略"
+      },
+      {
+        "source": "灰度发布",
+        "target": "カナリアリリース"
+      },
+      {
+        "source": "安全基线",
+        "target": "セキュリティベースライン"
+      },
+      {
+        "source": "性能基准",
+        "target": "パフォーマンスベンチマーク"
+      }
+    ],
+    "glossaryId": "it-zh-ja",
+    "translation": {
+      "text": "ICT産業向けクラウドネイティブ製品は、10,000倍のコンテナ化デプロイメントをサポートし、継続的インテグレーションによるシームレスなアップグレードを実現します。",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 245,
+          "completion_tokens": 54,
+          "total_tokens": 299,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 245
+        },
+        "durationMs": 2783,
+        "temperature": 0.3,
+        "isMock": false
+      }
+    },
+    "evaluation": {
+      "scores": {
+        "accuracy": 4.5,
+        "fluency": 4.8,
+        "toneConsistency": 4.7,
+        "terminologyAndFormat": 4.6
+      },
+      "issues": [
+        {
+          "type": "accuracy",
+          "excerpt": "10000X容器部署 → 10,000倍のコンテナ化デプロイメント",
+          "comment": "「10000X」直译为「10,000倍」可能产生歧义，原文更可能指「10,000个容器部署」或「万级容器部署」。建议改为「1万コンテナのデプロイメント」或「万単位のコンテナデプロイ」以准确传达规模概念。"
+        },
+        {
+          "type": "terminology",
+          "excerpt": "无感升级 → シームレスなアップグレード",
+          "comment": "「シームレス」虽为常用译法，但「无感」在技术语境中更强调用户无感知，建议补充说明如「ユーザー影響ゼロのアップグレード」或加注「（無感覚アップグレード）」以保留原文特色。"
+        }
+      ],
+      "overall_comment": "译文整体质量较高，术语规范（如「クラウドネイティブ」「継続的インテグレーション」符合行业标准），句式流畅自然。主要需微调数量表述的精确性，并强化「无感」的技术内涵。",
+      "recommendation": "human_review",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 287,
+          "completion_tokens": 350,
+          "total_tokens": 637,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "prompt_cache_hit_tokens": 192,
+          "prompt_cache_miss_tokens": 95
+        },
+        "durationMs": 14228,
+        "isMock": false
+      }
+    },
+    "userNote": "",
+    "updatedAt": "2025-11-04T15:31:55.908Z"
+  },
+  {
     "id": "6ec1b4f8-71e0-49c0-b75e-84b00e6bcc8d",
     "createdAt": "2025-11-04T14:21:42.163Z",
     "starred": false,

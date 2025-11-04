@@ -79,3 +79,17 @@
 {"durationMs":85,"ip":"::1","level":"info","message":"HTTP GET /favicon.ico 304 85ms","method":"GET","status":304,"timestamp":"2025-11-04T15:22:11.908Z","url":"/favicon.ico"}
 {"durationMs":2,"ip":"::1","level":"info","message":"HTTP GET /api/glossaries 304 2ms","method":"GET","status":304,"timestamp":"2025-11-04T15:22:12.028Z","url":"/api/glossaries"}
 {"durationMs":5,"ip":"::1","level":"info","message":"HTTP GET /api/history 304 5ms","method":"GET","status":304,"timestamp":"2025-11-04T15:22:12.095Z","url":"/api/history"}
+{"durationMs":18,"ip":"::1","level":"info","message":"HTTP GET / 304 18ms","method":"GET","status":304,"timestamp":"2025-11-04T15:30:23.169Z","url":"/"}
+{"durationMs":28,"ip":"::1","level":"info","message":"HTTP GET /.well-known/appspecific/com.chrome.devtools.json 304 28ms","method":"GET","status":304,"timestamp":"2025-11-04T15:30:23.348Z","url":"/.well-known/appspecific/com.chrome.devtools.json"}
+{"durationMs":6,"ip":"::1","level":"info","message":"HTTP GET /styles.css 304 6ms","method":"GET","status":304,"timestamp":"2025-11-04T15:30:23.369Z","url":"/styles.css"}
+{"durationMs":11,"ip":"::1","level":"info","message":"HTTP GET /app.js 200 11ms","method":"GET","status":200,"timestamp":"2025-11-04T15:30:23.378Z","url":"/app.js"}
+{"durationMs":30,"ip":"::1","level":"info","message":"HTTP GET /api/config 304 30ms","method":"GET","status":304,"timestamp":"2025-11-04T15:30:25.746Z","url":"/api/config"}
+{"durationMs":29,"ip":"::1","level":"info","message":"HTTP GET /favicon.ico 304 29ms","method":"GET","status":304,"timestamp":"2025-11-04T15:30:25.759Z","url":"/favicon.ico"}
+{"durationMs":22,"ip":"::1","level":"info","message":"HTTP GET /api/glossaries 304 22ms","method":"GET","status":304,"timestamp":"2025-11-04T15:30:25.876Z","url":"/api/glossaries"}
+{"durationMs":7,"ip":"::1","level":"info","message":"HTTP GET /api/history 304 7ms","method":"GET","status":304,"timestamp":"2025-11-04T15:30:25.903Z","url":"/api/history"}
+{"durationMs":59,"ip":"::1","level":"info","message":"HTTP GET /api/glossaries/mk-zh-ja 200 59ms","method":"GET","status":200,"timestamp":"2025-11-04T15:30:29.368Z","url":"/api/glossaries/mk-zh-ja"}
+{"durationMs":33,"ip":"::1","level":"info","message":"HTTP GET /api/glossaries/it-zh-ja 200 33ms","method":"GET","status":200,"timestamp":"2025-11-04T15:30:33.449Z","url":"/api/glossaries/it-zh-ja"}
+{"customGlossary":false,"durationMs":2783,"glossaryId":"it-zh-ja","glossaryTerms":10,"level":"info","message":"translation.success","mock":false,"model":"deepseek-chat","targetLanguage":"ja-JP","timestamp":"2025-11-04T15:31:19.876Z","tokenUsage":{"completion_tokens":54,"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":245,"prompt_tokens":245,"prompt_tokens_details":{"cached_tokens":0},"total_tokens":299}}
+{"durationMs":2795,"ip":"::1","level":"info","message":"HTTP POST /api/translate 200 2795ms","method":"POST","status":200,"timestamp":"2025-11-04T15:31:19.885Z","url":"/api/translate"}
+{"durationMs":14228,"level":"info","message":"evaluation.success","mock":false,"model":"deepseek-chat","recordId":"cf48a9df-cfba-450d-8bd3-e1333f18db83","timestamp":"2025-11-04T15:31:55.904Z"}
+{"durationMs":14247,"ip":"::1","level":"info","message":"HTTP POST /api/evaluate 200 14247ms","method":"POST","status":200,"timestamp":"2025-11-04T15:31:55.909Z","url":"/api/evaluate"}

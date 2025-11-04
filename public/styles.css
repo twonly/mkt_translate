@@ -170,6 +170,25 @@ button {
   color: var(--primary);
 }
 
+.glossary-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.glossary-hit {
+  background: rgba(53, 86, 240, 0.18);
+  border-radius: 4px;
+  padding: 0 4px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.glossary-explain {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 textarea,
 input,
 select {

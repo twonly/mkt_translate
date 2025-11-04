@@ -119,6 +119,36 @@ const ensureGlossaryOption = (id, label) => {
   ensureSelectOption(els.glossarySelect, id, label);
 };
 
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const highlightGlossaryText = (text, glossaryEntries = []) => {
+  if (!text) return "";
+  const targets = glossaryEntries
+    .map((entry) => (typeof entry === "string" ? entry : entry?.target))
+    .filter(Boolean)
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (!targets.length) {
+    return escapeHTML(text);
+  }
+
+  const uniqueTargets = Array.from(new Set(targets)).sort((a, b) => b.length - a.length);
+  const pattern = new RegExp(uniqueTargets.map((item) => escapeRegExp(item)).join("|"), "g");
+  let lastIndex = 0;
+  let result = "";
+
+  text.replace(pattern, (match, offset) => {
+    result += escapeHTML(text.slice(lastIndex, offset));
+    result += `<mark class="glossary-hit">${escapeHTML(match)}</mark>`;
+    lastIndex = offset + match.length;
+    return match;
+  });
+
+  result += escapeHTML(text.slice(lastIndex));
+  return result;
+};
+
 const applyDefaultsToForm = (defaults = {}) => {
   if (!defaults || typeof defaults !== "object") return;
   const {
@@ -458,6 +488,14 @@ const renderTranslation = () => {
           : ""
       }</div>`
     : "";
+  const translationText = record.translation?.text || "未获取到译文";
+  const highlightedTranslation = highlightGlossaryText(
+    translationText,
+    glossarySnapshot
+  );
+  const glossaryHighlightNote = glossarySnapshot.length
+    ? '<div class="glossary-explain">译文中带底色的词语来自所选术语库，方便核对术语命中情况。</div>'
+    : "";
 
   container.innerHTML = `
     <div class="meta-grid">
@@ -484,9 +522,8 @@ const renderTranslation = () => {
           : "—"
       }</div>
     </div>
-    <div class="translation-text">${escapeHTML(
-      record.translation?.text || "未获取到译文"
-    )}</div>
+    <div class="translation-text">${highlightedTranslation}</div>
+    ${glossaryHighlightNote}
     <div class="history-meta">
       ${record.domain ? `<span class="badge">${escapeHTML(record.domain)}</span>` : ""}
       ${record.tone ? `<span class="badge">${escapeHTML(record.tone)}</span>` : ""}
