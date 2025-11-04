@@ -81,6 +81,21 @@
                 placeholder="一行一个术语对，例如：BrandX=品牌X"
               ></textarea>
             </label>
+            <div class="form-field glossary-field">
+              <span>术语库</span>
+              <div class="glossary-selector">
+                <select id="glossary-domain">
+                  <option value="">全部领域</option>
+                </select>
+                <select id="glossary-select">
+                  <option value="">不使用术语库</option>
+                </select>
+                <button type="button" id="glossary-preview-btn" class="ghost small">预览术语</button>
+              </div>
+              <div id="glossary-preview" class="glossary-preview placeholder">
+                不勾选术语库时，可继续使用下方自定义术语表。
+              </div>
+            </div>
             <label class="form-field">
               <span>Prompt</span>
               <textarea id="prompt" rows="6"></textarea>

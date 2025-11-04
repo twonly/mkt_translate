@@ -1,0 +1,94 @@
+[
+  {
+    "id": "mk-zh-ja",
+    "name": "营销品牌术语库",
+    "domain": "市场营销",
+    "direction": {
+      "source": "zh-CN",
+      "target": "ja-JP"
+    },
+    "description": "品牌推广、活动运营常用词，适用于中文到日文场景。",
+    "terms": [
+      { "source": "品牌调性", "target": "ブランドトーン" },
+      { "source": "核心卖点", "target": "主要なセールスポイント" },
+      { "source": "用户触点", "target": "ユーザータッチポイント" },
+      { "source": "社交媒体运营", "target": "ソーシャルメディア運用" },
+      { "source": "转化率", "target": "コンバージョン率" },
+      { "source": "引流活动", "target": "集客キャンペーン" },
+      { "source": "品牌资产", "target": "ブランド資産" },
+      { "source": "营销自动化", "target": "マーケティングオートメーション" },
+      { "source": "内容日历", "target": "コンテンツカレンダー" },
+      { "source": "客户旅程", "target": "カスタマージャーニー" }
+    ],
+    "createdAt": "2024-01-02T09:00:00.000Z"
+  },
+  {
+    "id": "mk-zh-en",
+    "name": "营销品牌术语库",
+    "domain": "市场营销",
+    "direction": {
+      "source": "zh-CN",
+      "target": "en-US"
+    },
+    "description": "品牌与广告团队常用英文对应词。",
+    "terms": [
+      { "source": "品牌调性", "target": "brand tone" },
+      { "source": "核心卖点", "target": "key selling point" },
+      { "source": "用户触点", "target": "user touchpoint" },
+      { "source": "社交媒体运营", "target": "social media operations" },
+      { "source": "转化率", "target": "conversion rate" },
+      { "source": "引流活动", "target": "traffic acquisition campaign" },
+      { "source": "品牌资产", "target": "brand equity" },
+      { "source": "营销自动化", "target": "marketing automation" },
+      { "source": "内容日历", "target": "content calendar" },
+      { "source": "客户旅程", "target": "customer journey" }
+    ],
+    "createdAt": "2024-01-02T09:05:00.000Z"
+  },
+  {
+    "id": "it-zh-ja",
+    "name": "IT 技术术语库",
+    "domain": "信息技术",
+    "direction": {
+      "source": "zh-CN",
+      "target": "ja-JP"
+    },
+    "description": "软件开发、云计算常用技术词汇（日文）。",
+    "terms": [
+      { "source": "云原生", "target": "クラウドネイティブ" },
+      { "source": "容器化", "target": "コンテナ化" },
+      { "source": "持续集成", "target": "継続的インテグレーション" },
+      { "source": "微服务", "target": "マイクロサービス" },
+      { "source": "服务网格", "target": "サービスメッシュ" },
+      { "source": "可观测性", "target": "オブザーバビリティ" },
+      { "source": "回滚策略", "target": "ロールバック戦略" },
+      { "source": "灰度发布", "target": "カナリアリリース" },
+      { "source": "安全基线", "target": "セキュリティベースライン" },
+      { "source": "性能基准", "target": "パフォーマンスベンチマーク" }
+    ],
+    "createdAt": "2024-01-02T09:10:00.000Z"
+  },
+  {
+    "id": "it-zh-en",
+    "name": "IT 技术术语库",
+    "domain": "信息技术",
+    "direction": {
+      "source": "zh-CN",
+      "target": "en-US"
+    },
+    "description": "IT 运维与开发团队常用英文翻译。",
+    "terms": [
+      { "source": "云原生", "target": "cloud-native" },
+      { "source": "容器化", "target": "containerization" },
+      { "source": "持续集成", "target": "continuous integration" },
+      { "source": "微服务", "target": "microservices" },
+      { "source": "服务网格", "target": "service mesh" },
+      { "source": "可观测性", "target": "observability" },
+      { "source": "回滚策略", "target": "rollback strategy" },
+      { "source": "灰度发布", "target": "canary release" },
+      { "source": "安全基线", "target": "security baseline" },
+      { "source": "性能基准", "target": "performance benchmark" }
+    ],
+    "createdAt": "2024-01-02T09:12:00.000Z"
+  }
+]

@@ -20,6 +20,11 @@ const {
   getRecord
 } = require("./historyStore");
 const { loadSettings, saveSettings } = require("./settingsStore");
+const {
+  loadAllGlossaries,
+  getGlossaryById,
+  toSummary
+} = require("./glossaryStore");
 const { logger, logRequest } = require("./logger");
 
 const app = express();
@@ -86,6 +91,30 @@ app.get("/api/config", (req, res) => {
   });
 });
 
+app.get("/api/glossaries", (req, res) => {
+  const { targetLanguage, domain } = req.query || {};
+  const items = loadAllGlossaries()
+    .map(toSummary)
+    .filter((item) => {
+      if (targetLanguage && item.direction?.target !== targetLanguage) {
+        return false;
+      }
+      if (domain && item.domain !== domain) {
+        return false;
+      }
+      return true;
+    });
+  res.json({ items });
+});
+
+app.get("/api/glossaries/:id", (req, res) => {
+  const glossary = getGlossaryById(req.params.id);
+  if (!glossary) {
+    return res.status(404).json({ error: "glossary not found" });
+  }
+  res.json({ glossary });
+});
+
 app.get("/api/history", (req, res) => {
   const history = loadHistory();
   res.json({ items: history });
@@ -126,6 +155,9 @@ app.get("/api/history/export", (req, res) => {
       "audience",
       "sourceText",
       "translationText",
+      "glossaryId",
+      "glossaryName",
+      "glossaryTerms",
       "averageScore",
       "recommendation",
       "userNote"
@@ -160,6 +192,9 @@ app.get("/api/history/export", (req, res) => {
           item.audience,
           item.sourceText,
           item.translation?.text,
+          item.glossaryLibrary?.id || item.glossaryId || "",
+          item.glossaryLibrary?.name || "",
+          item.glossarySnapshot?.length || 0,
           avg,
           evaluation.recommendation,
           item.userNote
@@ -190,7 +225,8 @@ app.post("/api/translate", async (req, res) => {
     tone,
     audience,
     glossary,
-    temperature
+    temperature,
+    glossaryId
   } = req.body || {};
 
   if (!sourceText || !sourceText.trim()) {
@@ -221,6 +257,60 @@ app.post("/api/translate", async (req, res) => {
     variables
   );
 
+  let glossaryLibrary = null;
+  let glossaryTerms = [];
+  if (glossaryId) {
+    const glossaryEntry = getGlossaryById(glossaryId);
+    if (!glossaryEntry) {
+      return res.status(400).json({ error: "glossaryId is invalid" });
+    }
+    glossaryLibrary = {
+      id: glossaryEntry.id,
+      name: glossaryEntry.name,
+      domain: glossaryEntry.domain,
+      direction: glossaryEntry.direction,
+      description: glossaryEntry.description,
+      termsCount: Array.isArray(glossaryEntry.terms)
+        ? glossaryEntry.terms.length
+        : 0
+    };
+    glossaryTerms = Array.isArray(glossaryEntry.terms)
+      ? glossaryEntry.terms
+      : [];
+
+    if (
+      glossaryLibrary.direction?.target &&
+      glossaryLibrary.direction.target !== targetLanguage
+    ) {
+      logger.warn("glossary.direction.mismatch", {
+        glossaryId,
+        glossaryTarget: glossaryLibrary.direction?.target,
+        targetLanguage
+      });
+    }
+  }
+
+  const glossaryMessages = [];
+  if (glossaryTerms.length) {
+    const glossaryLines = glossaryTerms
+      .map((item) => `${item.source} = ${item.target}`)
+      .join("\n");
+    glossaryMessages.push({
+      role: "system",
+      content: `预设术语库（优先遵循）：${glossaryLibrary.name} ` +
+        `(${glossaryLibrary.direction?.source || ""} → ${
+          glossaryLibrary.direction?.target || ""
+        })\n${glossaryLines}`
+    });
+  }
+
+  if (glossary && glossary.trim()) {
+    glossaryMessages.push({
+      role: "system",
+      content: `用户追加术语要求：\n${glossary.trim()}`
+    });
+  }
+
   try {
     const translationResult = await performTranslation({
       model: finalModel,
@@ -228,14 +318,7 @@ app.post("/api/translate", async (req, res) => {
       temperature: temperature ?? 0.3,
       sourceText: variables.sourceText,
       targetLanguage,
-      context: glossary
-        ? [
-            {
-              role: "system",
-              content: `术语表（优先使用）：\n${glossary}`
-            }
-          ]
-        : undefined
+      context: glossaryMessages.length ? glossaryMessages : undefined
     });
 
     logger.info("translation.success", {
@@ -243,7 +326,10 @@ app.post("/api/translate", async (req, res) => {
       model: finalModel,
       durationMs: translationResult.durationMs,
       mock: translationResult.isMock,
-      tokenUsage: translationResult.usage
+      tokenUsage: translationResult.usage,
+      glossaryId: glossaryLibrary?.id,
+      glossaryTerms: glossaryTerms.length,
+      customGlossary: Boolean(glossary && glossary.trim())
     });
 
     const record = addRecord({
@@ -256,6 +342,9 @@ app.post("/api/translate", async (req, res) => {
       promptTemplate,
       promptVariables: variables,
       glossary,
+      glossaryLibrary,
+      glossarySnapshot: glossaryTerms,
+      glossaryId: glossaryLibrary?.id,
       translation: {
         text: translationResult.text,
         metadata: {
@@ -389,7 +478,8 @@ app.put("/api/settings", (req, res) => {
     "audience",
     "domain",
     "promptTemplate",
-    "temperature"
+    "temperature",
+    "glossaryId"
   ];
 
   const update = {};

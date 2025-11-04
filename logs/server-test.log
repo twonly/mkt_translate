@@ -5,3 +5,17 @@ Server listening on http://localhost:3100
 [2025-11-03T16:43:36.685Z] [32minfo[39m: HTTP POST /api/translate 200 1617ms {"method":"POST","url":"/api/translate","status":200,"durationMs":1617,"ip":"::1"}
 [2025-11-03T16:44:15.408Z] [32minfo[39m: evaluation.success {"recordId":"f12002ea-0f68-434b-8996-92d91c9a25aa","model":"deepseek-chat","durationMs":9184,"mock":false}
 [2025-11-03T16:44:15.411Z] [32minfo[39m: HTTP POST /api/evaluate 200 9190ms {"method":"POST","url":"/api/evaluate","status":200,"durationMs":9190,"ip":"::1"}
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+Server listening on http://localhost:3100
+[2025-11-04T14:20:48.775Z] [32minfo[39m: HTTP GET /api/glossaries 200 13ms {"method":"GET","url":"/api/glossaries","status":200,"durationMs":13,"ip":"::1"}
+[2025-11-04T14:20:58.698Z] [32minfo[39m: translation.success {"targetLanguage":"ja-JP","model":"deepseek-chat","durationMs":3018,"mock":false,"tokenUsage":{"prompt_tokens":261,"completion_tokens":36,"total_tokens":297,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":261},"glossaryId":"mk-zh-ja","glossaryTerms":10,"customGlossary":true}
+[2025-11-04T14:20:58.703Z] [32minfo[39m: HTTP POST /api/translate 200 3024ms {"method":"POST","url":"/api/translate","status":200,"durationMs":3024,"ip":"::1"}
+[2025-11-04T14:21:19.297Z] [32minfo[39m: evaluation.success {"recordId":"671461e2-347f-4320-9d39-3f828728ab9b","model":"deepseek-chat","durationMs":13738,"mock":false}
+[2025-11-04T14:21:19.301Z] [32minfo[39m: HTTP POST /api/evaluate 200 13744ms {"method":"POST","url":"/api/evaluate","status":200,"durationMs":13744,"ip":"::1"}
+[2025-11-04T14:21:25.808Z] [32minfo[39m: HTTP GET /api/glossaries/mk-zh-en 200 1ms {"method":"GET","url":"/api/glossaries/mk-zh-en","status":200,"durationMs":1,"ip":"::1"}
+[2025-11-04T14:21:31.021Z] [32minfo[39m: HTTP GET /api/history/export?format=csv 200 1ms {"method":"GET","url":"/api/history/export?format=csv","status":200,"durationMs":1,"ip":"::1"}
+[2025-11-04T14:21:42.162Z] [32minfo[39m: translation.success {"targetLanguage":"ja-JP","model":"deepseek-chat","durationMs":2507,"mock":false,"tokenUsage":{"prompt_tokens":261,"completion_tokens":36,"total_tokens":297,"prompt_tokens_details":{"cached_tokens":256},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":5},"glossaryId":"mk-zh-ja","glossaryTerms":10,"customGlossary":true}
+[2025-11-04T14:21:42.164Z] [32minfo[39m: HTTP POST /api/translate 200 2509ms {"method":"POST","url":"/api/translate","status":200,"durationMs":2509,"ip":"::1"}
+[2025-11-04T14:21:56.056Z] [32minfo[39m: evaluation.success {"recordId":"671461e2-347f-4320-9d39-3f828728ab9b","model":"deepseek-chat","durationMs":13878,"mock":false}
+[2025-11-04T14:21:56.059Z] [32minfo[39m: HTTP POST /api/evaluate 200 13883ms {"method":"POST","url":"/api/evaluate","status":200,"durationMs":13883,"ip":"::1"}
+[2025-11-04T14:21:56.072Z] [32minfo[39m: HTTP GET /api/glossaries 200 0ms {"method":"GET","url":"/api/glossaries","status":200,"durationMs":0,"ip":"::1"}

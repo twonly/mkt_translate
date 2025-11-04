@@ -15,6 +15,8 @@
 | 4 | `POST /api/translate` | `sourceText="We are preparing..."` | ✅ 200 | 译文耗时 1.60s，Token 114 |
 | 5 | `POST /api/evaluate` | `recordId=c4392dbf-...` | ✅ 200 | 评估耗时 4.62s，建议 `accept` |
 | 6 | `GET /api/history/export?format=json` | - | ✅ 200 | 导出落盘 `exports/history-export.json` |
+| 7 | `POST /api/translate` | `glossaryId=mk-zh-ja`、附加自定义术语 | ✅ 200 | 术语库10条+自定义术语叠加；详见 `logs/server-test.log` 新增段 |
+| 8 | `POST /api/evaluate` | 上述记录 `recordId=671461e2-...` | ✅ 200 | 评估耗时 13.7s，评分聚焦术语一致性 |
 
 > 首次尝试使用 `model=deepseek-translate` 触发 400 `Model Not Exist`，已在日志中保留，用于提醒模型名称需与 DeepSeek 控制台保持一致。
 

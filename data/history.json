@@ -1,5 +1,318 @@
 [
   {
+    "id": "6ec1b4f8-71e0-49c0-b75e-84b00e6bcc8d",
+    "createdAt": "2025-11-04T14:21:42.163Z",
+    "starred": false,
+    "sourceText": "核心卖点需要传达一致的品牌调性，并确保转化率稳定增长。",
+    "targetLanguage": "ja-JP",
+    "model": "deepseek-chat",
+    "domain": "市场营销",
+    "tone": "专业且友好",
+    "audience": "品牌团队",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "核心卖点需要传达一致的品牌调性，并确保转化率稳定增长。",
+      "targetLanguage": "ja-JP",
+      "tone": "专业且友好",
+      "audience": "品牌团队",
+      "domain": "市场营销",
+      "glossary": "品牌调性=ブランドトーン (保持一致性)"
+    },
+    "glossary": "品牌调性=ブランドトーン (保持一致性)",
+    "glossaryLibrary": {
+      "id": "mk-zh-ja",
+      "name": "营销品牌术语库",
+      "domain": "市场营销",
+      "direction": {
+        "source": "zh-CN",
+        "target": "ja-JP"
+      },
+      "description": "品牌推广、活动运营常用词，适用于中文到日文场景。",
+      "termsCount": 10
+    },
+    "glossarySnapshot": [
+      {
+        "source": "品牌调性",
+        "target": "ブランドトーン"
+      },
+      {
+        "source": "核心卖点",
+        "target": "主要なセールスポイント"
+      },
+      {
+        "source": "用户触点",
+        "target": "ユーザータッチポイント"
+      },
+      {
+        "source": "社交媒体运营",
+        "target": "ソーシャルメディア運用"
+      },
+      {
+        "source": "转化率",
+        "target": "コンバージョン率"
+      },
+      {
+        "source": "引流活动",
+        "target": "集客キャンペーン"
+      },
+      {
+        "source": "品牌资产",
+        "target": "ブランド資産"
+      },
+      {
+        "source": "营销自动化",
+        "target": "マーケティングオートメーション"
+      },
+      {
+        "source": "内容日历",
+        "target": "コンテンツカレンダー"
+      },
+      {
+        "source": "客户旅程",
+        "target": "カスタマージャーニー"
+      }
+    ],
+    "glossaryId": "mk-zh-ja",
+    "translation": {
+      "text": "主要なセールスポイントは一貫したブランドトーンを伝達し、コンバージョン率の安定的な成長を確保する必要があります。",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 261,
+          "completion_tokens": 36,
+          "total_tokens": 297,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 5
+        },
+        "durationMs": 2507,
+        "temperature": 0.2,
+        "isMock": false
+      }
+    },
+    "evaluation": null,
+    "userNote": ""
+  },
+  {
+    "id": "671461e2-347f-4320-9d39-3f828728ab9b",
+    "createdAt": "2025-11-04T14:20:58.701Z",
+    "starred": false,
+    "sourceText": "核心卖点需要传达一致的品牌调性，并确保转化率稳定增长。",
+    "targetLanguage": "ja-JP",
+    "model": "deepseek-chat",
+    "domain": "市场营销",
+    "tone": "专业且友好",
+    "audience": "品牌团队",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "核心卖点需要传达一致的品牌调性，并确保转化率稳定增长。",
+      "targetLanguage": "ja-JP",
+      "tone": "专业且友好",
+      "audience": "品牌团队",
+      "domain": "市场营销",
+      "glossary": "品牌调性=ブランドトーン (保持一致性)"
+    },
+    "glossary": "品牌调性=ブランドトーン (保持一致性)",
+    "glossaryLibrary": {
+      "id": "mk-zh-ja",
+      "name": "营销品牌术语库",
+      "domain": "市场营销",
+      "direction": {
+        "source": "zh-CN",
+        "target": "ja-JP"
+      },
+      "description": "品牌推广、活动运营常用词，适用于中文到日文场景。",
+      "termsCount": 10
+    },
+    "glossarySnapshot": [
+      {
+        "source": "品牌调性",
+        "target": "ブランドトーン"
+      },
+      {
+        "source": "核心卖点",
+        "target": "主要なセールスポイント"
+      },
+      {
+        "source": "用户触点",
+        "target": "ユーザータッチポイント"
+      },
+      {
+        "source": "社交媒体运营",
+        "target": "ソーシャルメディア運用"
+      },
+      {
+        "source": "转化率",
+        "target": "コンバージョン率"
+      },
+      {
+        "source": "引流活动",
+        "target": "集客キャンペーン"
+      },
+      {
+        "source": "品牌资产",
+        "target": "ブランド資産"
+      },
+      {
+        "source": "营销自动化",
+        "target": "マーケティングオートメーション"
+      },
+      {
+        "source": "内容日历",
+        "target": "コンテンツカレンダー"
+      },
+      {
+        "source": "客户旅程",
+        "target": "カスタマージャーニー"
+      }
+    ],
+    "glossaryId": "mk-zh-ja",
+    "translation": {
+      "text": "主要なセールスポイントは一貫したブランドトーンを伝達し、コンバージョン率の安定的な成長を確保する必要があります。",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 261,
+          "completion_tokens": 36,
+          "total_tokens": 297,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 261
+        },
+        "durationMs": 3018,
+        "temperature": 0.2,
+        "isMock": false
+      }
+    },
+    "evaluation": {
+      "scores": {
+        "accuracy": 4.5,
+        "fluency": 4.2,
+        "toneConsistency": 4.3,
+        "terminologyAndFormat": 4.8
+      },
+      "issues": [
+        {
+          "type": "accuracy",
+          "excerpt": "核心卖点 → 主要なセールスポイント",
+          "comment": "「核心卖点」译为「主要なセールスポイント」基本准确，但「核心」的强调感稍弱，建议可译为「中核的なセールスポイント」以更贴近原文的强调语气。"
+        },
+        {
+          "type": "fluency",
+          "excerpt": "需要传达...并确保... → ...を伝達し、...を確保する必要があります",
+          "comment": "译文句式稍显冗长，建议调整为「一貫したブランドトーンを伝え、コンバージョン率の安定的な成長を確保することが求められます」，使表达更自然流畅。"
+        },
+        {
+          "type": "tone",
+          "excerpt": "核心卖点需要... → 主要なセールスポイントは...必要があります",
+          "comment": "原文为客观陈述语气，译文使用「必要があります」稍显生硬，建议改为「求められます」或「重要です」以更贴合原文的商务中性语调。"
+        }
+      ],
+      "overall_comment": "译文整体准确传达了原文信息，术语使用规范，句式完整。主要问题在于部分措辞的流畅度和语气自然度略有不足，但无需大幅修改即可满足基本要求。",
+      "recommendation": "accept",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 264,
+          "completion_tokens": 369,
+          "total_tokens": 633,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "prompt_cache_hit_tokens": 256,
+          "prompt_cache_miss_tokens": 8
+        },
+        "durationMs": 13878,
+        "isMock": false
+      }
+    },
+    "userNote": "",
+    "updatedAt": "2025-11-04T14:21:56.058Z"
+  },
+  {
+    "id": "8b2119cd-ebea-4147-8c90-ab1e7297a75f",
+    "createdAt": "2025-11-04T14:07:07.649Z",
+    "starred": false,
+    "sourceText": "我是个最优秀的程序员，用vibe coding帮我完成一切的工作",
+    "targetLanguage": "fr-FR",
+    "model": "deepseek-chat",
+    "domain": "市场营销",
+    "tone": "专业且友好",
+    "audience": "目标受众",
+    "promptTemplate": "你是一名专业翻译专家，请将以下原文翻译成{{targetLanguage}}，面向{{audience}}。要求：\n- 保持原文语义准确，确保逻辑一致；\n- 采用{{tone}}语气，符合{{domain}}领域常用表达；\n- 若存在专有名词或术语，按术语表要求进行翻译；\n- 输出结构保持与原文一致。\n\n原文：\n{{sourceText}}",
+    "promptVariables": {
+      "sourceText": "我是个最优秀的程序员，用vibe coding帮我完成一切的工作",
+      "targetLanguage": "fr-FR",
+      "tone": "专业且友好",
+      "audience": "目标受众",
+      "domain": "市场营销",
+      "glossary": ""
+    },
+    "glossary": "",
+    "translation": {
+      "text": "Je suis un programmeur exceptionnel, et le coding par ambiance m'aide à accomplir toutes mes tâches de travail.",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 105,
+          "completion_tokens": 26,
+          "total_tokens": 131,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 105
+        },
+        "durationMs": 2043,
+        "temperature": 0.3,
+        "isMock": false
+      }
+    },
+    "evaluation": {
+      "scores": {
+        "accuracy": 3.5,
+        "fluency": 4,
+        "toneConsistency": 4,
+        "terminologyAndFormat": 2.5
+      },
+      "issues": [
+        {
+          "type": "accuracy",
+          "excerpt": "最优秀的 → exceptionnel",
+          "comment": "'exceptionnel' 意为'非凡的、杰出的'，但原文'最优秀的'强调最高级，建议改为'le meilleur programmeur'或'le plus compétent'以更准确传达原意。"
+        },
+        {
+          "type": "terminology",
+          "excerpt": "vibe coding → le coding par ambiance",
+          "comment": "'vibe coding' 是特定术语，直译'coding par ambiance'可能造成理解困难。建议保留英文术语'vibe coding'并添加注释，或根据上下文意译为'programmation intuitive'（若指凭感觉编程）。"
+        },
+        {
+          "type": "terminology",
+          "excerpt": "tâches de travail",
+          "comment": "'tâches de travail' 略显冗余，法语中'tâches'已包含工作含义，建议简化为'toutes mes tâches'。"
+        }
+      ],
+      "overall_comment": "译文整体流畅且语气与原文一致，但关键术语处理不当，最高级表达不够精准，需重点优化术语翻译以确保专业性和准确性。",
+      "recommendation": "human_review",
+      "metadata": {
+        "usage": {
+          "prompt_tokens": 251,
+          "completion_tokens": 335,
+          "total_tokens": 586,
+          "prompt_tokens_details": {
+            "cached_tokens": 192
+          },
+          "prompt_cache_hit_tokens": 192,
+          "prompt_cache_miss_tokens": 59
+        },
+        "durationMs": 13462,
+        "isMock": false
+      }
+    },
+    "userNote": "",
+    "updatedAt": "2025-11-04T14:07:26.783Z"
+  },
+  {
     "id": "f5fb081f-7c38-4e2a-8260-3bf1c5ee885e",
     "createdAt": "2025-11-04T14:04:23.463Z",
     "starred": false,

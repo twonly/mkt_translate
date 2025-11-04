@@ -5,6 +5,10 @@ const state = {
   basePromptTemplate: "",
   defaultPrompt: "",
   savedDefaults: {},
+  glossaries: [],
+  glossaryDetails: {},
+  glossaryDomains: [],
+  selectedGlossaryId: "",
   filters: {
     search: "",
     starredOnly: false
@@ -25,6 +29,10 @@ const els = {
   audience: document.getElementById("audience"),
   temperature: document.getElementById("temperature"),
   glossary: document.getElementById("glossary"),
+  glossaryDomain: document.getElementById("glossary-domain"),
+  glossarySelect: document.getElementById("glossary-select"),
+  glossaryPreview: document.getElementById("glossary-preview"),
+  glossaryPreviewBtn: document.getElementById("glossary-preview-btn"),
   prompt: document.getElementById("prompt"),
   resetPrompt: document.getElementById("reset-prompt-btn"),
   saveDefaultsBtn: document.getElementById("save-defaults-btn"),
@@ -106,6 +114,11 @@ const ensureSelectOption = (selectElement, value, label = value) => {
   }
 };
 
+const ensureGlossaryOption = (id, label) => {
+  if (!id) return;
+  ensureSelectOption(els.glossarySelect, id, label);
+};
+
 const applyDefaultsToForm = (defaults = {}) => {
   if (!defaults || typeof defaults !== "object") return;
   const {
@@ -115,7 +128,8 @@ const applyDefaultsToForm = (defaults = {}) => {
     audience,
     domain,
     promptTemplate,
-    temperature
+    temperature,
+    glossaryId
   } = defaults;
 
   if (targetLanguage) {
@@ -142,6 +156,172 @@ const applyDefaultsToForm = (defaults = {}) => {
     els.prompt.value = promptTemplate;
     state.defaultPrompt = promptTemplate;
   }
+  if (glossaryId) {
+    state.selectedGlossaryId = glossaryId;
+  }
+};
+
+const formatDirection = (direction) => {
+  if (!direction) return "";
+  const from = direction.source || "";
+  const to = direction.target || "";
+  if (!from && !to) return "";
+  return `${from}→${to}`;
+};
+
+const getFilteredGlossaries = () => {
+  const target = els.targetLanguage.value;
+  const domainFilter = els.glossaryDomain.value;
+  return state.glossaries.filter((item) => {
+    if (target && item.direction?.target && item.direction.target !== target) {
+      return false;
+    }
+    if (domainFilter && item.domain !== domainFilter) {
+      return false;
+    }
+    return true;
+  });
+};
+
+const refreshGlossaryDomains = () => {
+  const domains = Array.from(
+    new Set(state.glossaries.map((item) => item.domain).filter(Boolean))
+  ).sort();
+  state.glossaryDomains = domains;
+  els.glossaryDomain.innerHTML = `
+    <option value="">全部领域</option>
+    ${domains.map((domain) => `<option value="${domain}">${escapeHTML(domain)}</option>`).join("")}
+  `;
+};
+
+const refreshGlossaryOptions = ({ preserveSelection = true } = {}) => {
+  const previous = preserveSelection ? state.selectedGlossaryId : "";
+  const filtered = getFilteredGlossaries();
+
+  const optionHtml = filtered
+    .map((item) => {
+      const label = `${escapeHTML(item.domain)} · ${escapeHTML(
+        formatDirection(item.direction)
+      )} · ${item.termsCount}条`;
+      return `<option value="${item.id}">${label}</option>`;
+    })
+    .join("");
+
+  els.glossarySelect.innerHTML = `<option value="">不使用术语库</option>${optionHtml}`;
+
+  let selected = previous;
+  const selectedItem = state.glossaries.find((item) => item.id === selected) || null;
+  const selectedInFiltered = filtered.some((item) => item.id === selected);
+
+  if (selected && !selectedInFiltered && selectedItem) {
+    const label = `${escapeHTML(selectedItem.domain)} · ${escapeHTML(
+      formatDirection(selectedItem.direction)
+    )} · ${selectedItem.termsCount}条`;
+    const option = document.createElement("option");
+    option.value = selectedItem.id;
+    option.textContent = label;
+    option.dataset.hidden = "true";
+    els.glossarySelect.appendChild(option);
+  }
+
+  if (selected && !selectedItem) {
+    selected = "";
+  }
+
+  state.selectedGlossaryId = selected;
+  els.glossarySelect.value = selected;
+};
+
+const renderGlossaryPreview = async (glossaryId) => {
+  if (!glossaryId) {
+    els.glossaryPreview.classList.add("placeholder");
+    els.glossaryPreview.innerHTML =
+      "不勾选术语库时，可继续使用下方自定义术语表。";
+    return;
+  }
+
+  const cached = state.glossaryDetails[glossaryId];
+  if (cached) {
+    const previewTerms = cached.terms.slice(0, 5);
+    els.glossaryPreview.classList.remove("placeholder");
+    els.glossaryPreview.innerHTML = `
+      <strong>${escapeHTML(cached.name)}</strong> · ${escapeHTML(
+        cached.domain
+      )} · ${escapeHTML(formatDirection(cached.direction))}
+      <br />
+      ${previewTerms
+        .map(
+          (term) =>
+            `${escapeHTML(term.source)} <span style="color:var(--text-muted);">→</span> ${escapeHTML(term.target)}`
+        )
+        .join("<br />")}
+      ${
+        cached.terms.length > previewTerms.length
+          ? `<br /><span class="badge">共 ${cached.terms.length} 条</span>`
+          : ""
+      }
+    `;
+    return;
+  }
+
+  els.glossaryPreview.classList.remove("placeholder");
+  els.glossaryPreview.textContent = "术语加载中...";
+
+  try {
+    const data = await apiFetch(`/api/glossaries/${glossaryId}`);
+    if (data.glossary) {
+      state.glossaryDetails[glossaryId] = data.glossary;
+      renderGlossaryPreview(glossaryId);
+    } else {
+      els.glossaryPreview.textContent = "未找到术语库详情";
+    }
+  } catch (error) {
+    els.glossaryPreview.textContent = error.message || "术语加载失败";
+  }
+};
+
+const setSelectedGlossary = (glossaryId, { updatePreview = true } = {}) => {
+  state.selectedGlossaryId = glossaryId || "";
+  els.glossarySelect.value = state.selectedGlossaryId;
+  if (updatePreview) {
+    renderGlossaryPreview(state.selectedGlossaryId);
+  }
+};
+
+const loadGlossaries = async () => {
+  const data = await apiFetch("/api/glossaries");
+  state.glossaries = Array.isArray(data.items) ? data.items : [];
+  refreshGlossaryDomains();
+  const selectedItem = state.glossaries.find(
+    (item) => item.id === state.selectedGlossaryId
+  );
+  if (selectedItem?.domain) {
+    ensureSelectOption(els.glossaryDomain, selectedItem.domain, selectedItem.domain);
+    els.glossaryDomain.value = selectedItem.domain;
+  }
+  refreshGlossaryOptions({ preserveSelection: true });
+  if (
+    state.selectedGlossaryId &&
+    !state.glossaries.some((item) => item.id === state.selectedGlossaryId)
+  ) {
+    state.selectedGlossaryId = "";
+  }
+  renderGlossaryPreview(state.selectedGlossaryId);
+};
+
+const handleGlossaryDomainChange = () => {
+  refreshGlossaryOptions({ preserveSelection: true });
+  const currentValue = els.glossarySelect.value;
+  if (currentValue !== state.selectedGlossaryId) {
+    setSelectedGlossary(currentValue, { updatePreview: true });
+  } else {
+    renderGlossaryPreview(state.selectedGlossaryId);
+  }
+};
+
+const handleTargetLanguageChange = () => {
+  refreshGlossaryOptions({ preserveSelection: false });
+  setSelectedGlossary(els.glossarySelect.value, { updatePreview: true });
 };
 
 const setStatus = (message = "", type = "info", duration = 3600) => {
@@ -265,10 +445,33 @@ const renderTranslation = () => {
   }
 
   const metadata = record.translation?.metadata || {};
+  const glossaryLibrary = record.glossaryLibrary;
+  const glossarySnapshot = Array.isArray(record.glossarySnapshot)
+    ? record.glossarySnapshot
+    : [];
   const glossaryBadge = record.glossary
     ? `<span class="badge">术语表启用</span>`
     : "";
+  const glossaryLibBadge = glossaryLibrary
+    ? `<span class="badge">${escapeHTML(glossaryLibrary.name)} · ${escapeHTML(
+        glossaryLibrary.domain || ""
+      )}</span>`
+    : "";
   const mockBadge = metadata.isMock ? `<span class="badge">MOCK</span>` : "";
+
+  const glossaryListHtml = glossarySnapshot.length
+    ? `<div class="glossary-preview"><strong>术语预览</strong><br />${glossarySnapshot
+        .slice(0, 8)
+        .map(
+          (item) =>
+            `${escapeHTML(item.source)} <span style="color:var(--text-muted);">→</span> ${escapeHTML(item.target)}`
+        )
+        .join("<br />")}${
+        glossarySnapshot.length > 8
+          ? `<br /><span class="badge">共 ${glossarySnapshot.length} 条</span>`
+          : ""
+      }</div>`
+    : "";
 
   container.innerHTML = `
     <div class="meta-grid">
@@ -287,6 +490,13 @@ const renderTranslation = () => {
       <div class="meta-item"><strong>温度</strong><br />${
         metadata.temperature ?? "—"
       }</div>
+      <div class="meta-item"><strong>术语库</strong><br />${
+        glossaryLibrary?.name
+          ? `${escapeHTML(glossaryLibrary.name)} (${escapeHTML(
+              formatDirection(glossaryLibrary.direction)
+            )})`
+          : "—"
+      }</div>
     </div>
     <div class="translation-text">${escapeHTML(
       record.translation?.text || "未获取到译文"
@@ -296,8 +506,10 @@ const renderTranslation = () => {
       ${record.tone ? `<span class="badge">${escapeHTML(record.tone)}</span>` : ""}
       ${record.audience ? `<span class="badge">${escapeHTML(record.audience)}</span>` : ""}
       ${glossaryBadge}
+      ${glossaryLibBadge}
       ${mockBadge}
     </div>
+    ${glossaryListHtml}
   `;
 };
 
@@ -425,6 +637,9 @@ const renderHistoryList = () => {
       const noteBadge = record.userNote
         ? `<span class="badge">已备注</span>`
         : "";
+      const glossaryBadge = record.glossaryLibrary
+        ? `<span class="badge">术语库 ${escapeHTML(record.glossaryLibrary.name)}</span>`
+        : "";
 
       return `
         <div class="history-item" data-id="${record.id}">
@@ -440,6 +655,7 @@ const renderHistoryList = () => {
                     : ""
                 }
                 ${noteBadge}
+                ${glossaryBadge}
               </div>
               <div class="history-snippet">
                 ${escapeHTML(
@@ -489,6 +705,10 @@ const renderApp = () => {
   } else {
     els.noteInput.value = "";
   }
+
+  els.glossarySelect.value = state.selectedGlossaryId || "";
+
+  renderGlossaryPreview(state.selectedGlossaryId);
 };
 
 const handleTranslate = async (event) => {
@@ -504,7 +724,8 @@ const handleTranslate = async (event) => {
     audience: els.audience.value.trim() || els.audience.placeholder,
     temperature: Number.parseFloat(els.temperature.value) || 0.3,
     glossary: els.glossary.value.trim(),
-    prompt: els.prompt.value
+    prompt: els.prompt.value,
+    glossaryId: state.selectedGlossaryId
   };
 
   if (!payload.sourceText) {
@@ -526,6 +747,8 @@ const handleTranslate = async (event) => {
 
     upsertHistory(record);
     state.currentRecord = record;
+    setSelectedGlossary(record.glossaryId, { updatePreview: false });
+    refreshGlossaryOptions({ preserveSelection: true });
     setStatus("翻译完成，可进行评估。", "success");
     renderApp();
   } catch (error) {
@@ -546,7 +769,8 @@ const handleSaveDefaults = async () => {
     audience: els.audience.value.trim(),
     domain: els.domain.value.trim(),
     promptTemplate: els.prompt.value.trim(),
-    temperature: Number.isNaN(parsedTemperature) ? undefined : parsedTemperature
+    temperature: Number.isNaN(parsedTemperature) ? undefined : parsedTemperature,
+    glossaryId: state.selectedGlossaryId || undefined
   };
 
   const sanitized = {};
@@ -585,6 +809,8 @@ const handleEvaluate = async () => {
     if (record) {
       upsertHistory(record);
       state.currentRecord = record;
+      setSelectedGlossary(record.glossaryId, { updatePreview: false });
+      refreshGlossaryOptions({ preserveSelection: true });
     } else if (state.currentRecord) {
       state.currentRecord.evaluation = data.evaluation;
     }
@@ -636,6 +862,18 @@ const handleHistoryClick = async (event) => {
     els.glossary.value = record.glossary || "";
     els.prompt.value =
       record.promptTemplate || state.defaultPrompt;
+
+    if (record.glossaryLibrary?.domain) {
+      ensureSelectOption(
+        els.glossaryDomain,
+        record.glossaryLibrary.domain,
+        record.glossaryLibrary.domain
+      );
+      els.glossaryDomain.value = record.glossaryLibrary.domain;
+    }
+
+    refreshGlossaryOptions({ preserveSelection: true });
+    setSelectedGlossary(record.glossaryLibrary?.id, { updatePreview: true });
 
     setStatus("已加载历史记录，继续编辑或重新翻译。");
     renderApp();
@@ -720,10 +958,17 @@ const init = async () => {
   try {
     const config = await apiFetch("/api/config");
     populateConfig(config);
-    renderApp();
   } catch (error) {
     setStatus(error.message || "配置加载失败", "error", 6000);
   }
+
+  try {
+    await loadGlossaries();
+  } catch (error) {
+    setStatus(error.message || "术语库加载失败", "error", 6000);
+  }
+
+  renderApp();
 
   try {
     const historyData = await apiFetch("/api/history");
@@ -753,6 +998,14 @@ els.exportCsvBtn.addEventListener("click", (event) => {
   event.preventDefault();
   handleExport("csv");
 });
+els.glossaryDomain.addEventListener("change", handleGlossaryDomainChange);
+els.glossarySelect.addEventListener("change", (event) => {
+  setSelectedGlossary(event.target.value, { updatePreview: true });
+});
+els.glossaryPreviewBtn.addEventListener("click", () => {
+  renderGlossaryPreview(state.selectedGlossaryId || els.glossarySelect.value);
+});
+els.targetLanguage.addEventListener("change", handleTargetLanguageChange);
 
 els.historySearch.addEventListener("input", (event) => {
   state.filters.search = event.target.value;

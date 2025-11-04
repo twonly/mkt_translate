@@ -146,6 +146,30 @@ button {
   font-weight: 500;
 }
 
+.glossary-field {
+  gap: 12px;
+}
+
+.glossary-selector {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.glossary-preview {
+  border: 1px dashed rgba(53, 86, 240, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(53, 86, 240, 0.04);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.glossary-preview strong {
+  color: var(--primary);
+}
+
 textarea,
 input,
 select {
