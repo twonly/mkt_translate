@@ -35,6 +35,7 @@ const addRecord = (record) => {
     id: uuidv4(),
     createdAt: new Date().toISOString(),
     starred: false,
+    annotations: [],
     ...record
   };
   history.unshift(entry);

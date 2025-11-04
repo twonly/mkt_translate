@@ -1,3 +1,5 @@
+import { AnnotationPanel } from "./components/AnnotationPanel.js";
+
 const state = {
   config: null,
   history: [],
@@ -47,8 +49,14 @@ const els = {
   starFilter: document.getElementById("star-filter"),
   exportJsonBtn: document.getElementById("export-json-btn"),
   exportCsvBtn: document.getElementById("export-csv-btn"),
+  annotationPanel: document.getElementById("annotation-panel"),
   statusMessage: document.getElementById("status-message")
 };
+
+const getGlossarySources = (record) =>
+  (record?.glossarySnapshot || [])
+    .map((item) => item.source)
+    .filter(Boolean);
 
 const escapeHTML = (text = "") =>
   text
@@ -140,7 +148,15 @@ const highlightGlossaryText = (text, glossaryEntries = []) => {
 
   text.replace(pattern, (match, offset) => {
     result += escapeHTML(text.slice(lastIndex, offset));
-    result += `<mark class="glossary-hit">${escapeHTML(match)}</mark>`;
+    const sources = glossaryEntries
+      .filter((entry) => entry?.target?.trim() === match.trim())
+      .map((entry) => entry.source)
+      .filter(Boolean);
+    const tooltip = sources.length ? `原文：${sources.join(" / ")}` : "术语库命中";
+    const dataAttributes = sources.length
+      ? ` data-source="${escapeHTML(sources.join(" / "))}" data-origin="library"`
+      : "";
+    result += `<mark class="glossary-hit"${dataAttributes} title="${escapeHTML(tooltip)}">${escapeHTML(match)}</mark>`;
     lastIndex = offset + match.length;
     return match;
   });
@@ -304,6 +320,12 @@ const renderGlossaryPreview = async (glossaryId) => {
   }
 };
 
+const setActiveRecord = (record) => {
+  state.currentRecord = record || null;
+  const sources = getGlossarySources(record);
+  AnnotationPanel.setRecord(record ? record.id : null, { sources });
+};
+
 const setSelectedGlossary = (glossaryId, { updatePreview = true } = {}) => {
   state.selectedGlossaryId = glossaryId || "";
   els.glossarySelect.value = state.selectedGlossaryId;
@@ -426,6 +448,9 @@ const upsertHistory = (record) => {
     state.history[index] = record;
   } else {
     state.history.unshift(record);
+  }
+  if (state.currentRecord && state.currentRecord.id === record.id) {
+    state.currentRecord = record;
   }
 };
 
@@ -769,7 +794,7 @@ const handleTranslate = async (event) => {
     if (!record) throw new Error("未获取到翻译结果");
 
     upsertHistory(record);
-    state.currentRecord = record;
+    setActiveRecord(record);
     setSelectedGlossary(record.glossaryId, { updatePreview: false });
     refreshGlossaryOptions({ preserveSelection: true });
     setStatus("翻译完成，可进行评估。", "success");
@@ -831,7 +856,7 @@ const handleEvaluate = async () => {
     const record = data.record;
     if (record) {
       upsertHistory(record);
-      state.currentRecord = record;
+      setActiveRecord(record);
       setSelectedGlossary(record.glossaryId, { updatePreview: false });
       refreshGlossaryOptions({ preserveSelection: true });
     } else if (state.currentRecord) {
@@ -863,7 +888,7 @@ const handleHistoryClick = async (event) => {
   if (actionBtn.dataset.action === "load") {
     const record = state.history.find((item) => item.id === id);
     if (!record) return;
-    state.currentRecord = record;
+    setActiveRecord(record);
     els.sourceText.value = record.sourceText || "";
     if (record.targetLanguage) {
       ensureSelectOption(
@@ -977,7 +1002,36 @@ const handleExport = async (format) => {
   }
 };
 
+const handleTranslationClick = (event) => {
+  const mark = event.target.closest(".glossary-hit");
+  if (!mark) return;
+  const sourceText = mark.dataset.source || mark.textContent.trim();
+  const primarySource = sourceText.split(" / ")[0];
+  AnnotationPanel.appendDraftSource(primarySource);
+  AnnotationPanel.setDraftContext({
+    segmentRef: `术语：${mark.textContent.trim()}`,
+    source: primarySource
+  });
+  setStatus("已将术语添加到标注表单", "info", 3000);
+};
+
 const init = async () => {
+  if (els.annotationPanel) {
+    AnnotationPanel.mount(els.annotationPanel);
+    AnnotationPanel.registerHandlers({
+      onSubmit: ({ record }) => {
+        if (record) {
+          upsertHistory(record);
+          setActiveRecord(record);
+          renderApp();
+        } else {
+          renderApp();
+        }
+      }
+    });
+    AnnotationPanel.setRecord(null);
+  }
+
   try {
     const config = await apiFetch("/api/config");
     populateConfig(config);
@@ -1029,6 +1083,7 @@ els.glossaryPreviewBtn.addEventListener("click", () => {
   renderGlossaryPreview(state.selectedGlossaryId || els.glossarySelect.value);
 });
 els.targetLanguage.addEventListener("change", handleTargetLanguageChange);
+els.translationResult.addEventListener("click", handleTranslationClick);
 
 els.historySearch.addEventListener("input", (event) => {
   state.filters.search = event.target.value;

@@ -99,6 +99,163 @@ button {
   gap: 24px;
 }
 
+.annotation-container {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+}
+
+.annotation-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px 20px 24px;
+  gap: 18px;
+}
+
+.annotation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.annotation-header h2 {
+  margin: 0;
+}
+
+.annotation-subtitle {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.annotation-counter {
+  display: flex;
+  gap: 8px;
+}
+
+.annotation-panel .badge.secondary {
+  background: rgba(240, 157, 53, 0.18);
+  color: var(--accent);
+}
+
+.annot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid rgba(53, 86, 240, 0.12);
+  border-radius: 14px;
+  background: rgba(53, 86, 240, 0.04);
+}
+
+.annot-form textarea,
+.annot-form input {
+  background: white;
+}
+
+.issue-type-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: white;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border 0.2s ease, background 0.2s ease;
+}
+
+.chip input {
+  accent-color: var(--primary);
+}
+
+.chip:hover {
+  border-color: var(--primary);
+  background: rgba(53, 86, 240, 0.12);
+}
+
+.chip.severity {
+  border-color: rgba(53, 86, 240, 0.18);
+  background: rgba(53, 86, 240, 0.08);
+}
+
+.severity-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.annot-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.annotation-error {
+  color: var(--danger);
+  font-size: 13px;
+  min-height: 18px;
+}
+
+.annotation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.annotation-card {
+  border: 1px solid rgba(53, 86, 240, 0.1);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.annotation-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.annotation-text,
+.annotation-suggestion {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.annotation-suggestion span {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.annotation-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.annotation-card footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
 .card {
   background: var(--bg-card);
   border-radius: var(--radius-card);

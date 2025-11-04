@@ -1,0 +1,19 @@
+[
+  {
+    "id": "6330f0c2-c12d-4c63-9951-b7eb14cbedeb",
+    "recordId": "53b8a3e5-13c6-4661-b1b0-ae62663a3f11",
+    "segmentRef": "术语：ブランドトーン",
+    "issueTypes": [
+      "terminology"
+    ],
+    "severity": "minor",
+    "description": "术语表达建议更自然",
+    "suggestion": "ブランドトーンを一貫して伝えましょう",
+    "linkedGlossaryEntryId": null,
+    "createdBy": "anonymous",
+    "status": "draft",
+    "sources": [],
+    "createdAt": "2025-11-04T16:19:28.900Z",
+    "updatedAt": "2025-11-04T16:19:28.900Z"
+  }
+]

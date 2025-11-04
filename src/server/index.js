@@ -25,6 +25,11 @@ const {
   getGlossaryById,
   toSummary
 } = require("./glossaryStore");
+const {
+  getAnnotations,
+  createAnnotation,
+  updateAnnotation
+} = require("./annotationStore");
 const { logger, logRequest } = require("./logger");
 
 const app = express();
@@ -118,6 +123,32 @@ app.get("/api/glossaries/:id", (req, res) => {
 app.get("/api/history", (req, res) => {
   const history = loadHistory();
   res.json({ items: history });
+});
+
+app.get("/api/annotations", (req, res) => {
+  const { recordId } = req.query || {};
+  const annotations = getAnnotations(recordId);
+  logger.info("annotations.list", { recordId, count: annotations.length });
+  res.json({ items: annotations });
+});
+
+app.post("/api/annotations", (req, res) => {
+  try {
+    const { annotation, record } = createAnnotation(req.body || {});
+    logger.info("annotations.create", { recordId: annotation.recordId, id: annotation.id });
+    res.status(201).json({ annotation, record });
+  } catch (error) {
+    logger.error("annotation.create.error", { error: error.message });
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.put("/api/annotations/:id", (req, res) => {
+  const result = updateAnnotation(req.params.id, req.body || {});
+  if (!result) {
+    return res.status(404).json({ error: "annotation not found" });
+  }
+  res.json(result);
 });
 
 app.post("/api/history/:id/star", (req, res) => {

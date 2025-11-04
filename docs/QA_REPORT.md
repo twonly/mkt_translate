@@ -17,6 +17,8 @@
 | 6 | `GET /api/history/export?format=json` | - | ✅ 200 | 导出落盘 `exports/history-export.json` |
 | 7 | `POST /api/translate` | `glossaryId=mk-zh-ja`、附加自定义术语 | ✅ 200 | 术语库10条+自定义术语叠加；详见 `logs/server-test.log` 新增段 |
 | 8 | `POST /api/evaluate` | 上述记录 `recordId=671461e2-...` | ✅ 200 | 评估耗时 13.7s，评分聚焦术语一致性 |
+| 9 | `POST /api/annotations` | `recordId=...`、术语问题标注 | ✅ 201 | 返回标注详情并更新历史记录 `annotations` 字段 |
+| 10 | `GET /api/annotations?recordId=...` | - | ✅ 200 | 核查最新标注列表，供前端加载 |
 
 > 首次尝试使用 `model=deepseek-translate` 触发 400 `Model Not Exist`，已在日志中保留，用于提醒模型名称需与 DeepSeek 控制台保持一致。
 
