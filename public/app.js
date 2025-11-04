@@ -194,13 +194,13 @@ const refreshGlossaryDomains = () => {
   `;
 };
 
-const refreshGlossaryOptions = ({ preserveSelection = true } = {}) => {
+const refreshGlossaryOptions = ({ preserveSelection = true, autoSelectFirst = true } = {}) => {
   const previous = preserveSelection ? state.selectedGlossaryId : "";
   const filtered = getFilteredGlossaries();
 
   const optionHtml = filtered
     .map((item) => {
-      const label = `${escapeHTML(item.domain)} · ${escapeHTML(
+      const label = `${escapeHTML(item.name)} · ${escapeHTML(
         formatDirection(item.direction)
       )} · ${item.termsCount}条`;
       return `<option value="${item.id}">${label}</option>`;
@@ -210,26 +210,20 @@ const refreshGlossaryOptions = ({ preserveSelection = true } = {}) => {
   els.glossarySelect.innerHTML = `<option value="">不使用术语库</option>${optionHtml}`;
 
   let selected = previous;
-  const selectedItem = state.glossaries.find((item) => item.id === selected) || null;
-  const selectedInFiltered = filtered.some((item) => item.id === selected);
+  const isSelectedAvailable = filtered.some((item) => item.id === selected);
 
-  if (selected && !selectedInFiltered && selectedItem) {
-    const label = `${escapeHTML(selectedItem.domain)} · ${escapeHTML(
-      formatDirection(selectedItem.direction)
-    )} · ${selectedItem.termsCount}条`;
-    const option = document.createElement("option");
-    option.value = selectedItem.id;
-    option.textContent = label;
-    option.dataset.hidden = "true";
-    els.glossarySelect.appendChild(option);
-  }
-
-  if (selected && !selectedItem) {
+  if (!isSelectedAvailable) {
     selected = "";
   }
 
+  if (!selected && autoSelectFirst && filtered.length) {
+    selected = filtered[0].id;
+  }
+
   state.selectedGlossaryId = selected;
-  els.glossarySelect.value = selected;
+  els.glossarySelect.value = selected || "";
+
+  return { filtered, selected };
 };
 
 const renderGlossaryPreview = async (glossaryId) => {
@@ -298,30 +292,22 @@ const loadGlossaries = async () => {
   if (selectedItem?.domain) {
     ensureSelectOption(els.glossaryDomain, selectedItem.domain, selectedItem.domain);
     els.glossaryDomain.value = selectedItem.domain;
+  } else {
+    els.glossaryDomain.value = "";
   }
-  refreshGlossaryOptions({ preserveSelection: true });
-  if (
-    state.selectedGlossaryId &&
-    !state.glossaries.some((item) => item.id === state.selectedGlossaryId)
-  ) {
-    state.selectedGlossaryId = "";
-  }
-  renderGlossaryPreview(state.selectedGlossaryId);
+
+  const { selected } = refreshGlossaryOptions({ preserveSelection: true, autoSelectFirst: true });
+  setSelectedGlossary(selected, { updatePreview: true });
 };
 
 const handleGlossaryDomainChange = () => {
-  refreshGlossaryOptions({ preserveSelection: true });
-  const currentValue = els.glossarySelect.value;
-  if (currentValue !== state.selectedGlossaryId) {
-    setSelectedGlossary(currentValue, { updatePreview: true });
-  } else {
-    renderGlossaryPreview(state.selectedGlossaryId);
-  }
+  const { selected } = refreshGlossaryOptions({ preserveSelection: true, autoSelectFirst: true });
+  setSelectedGlossary(selected, { updatePreview: true });
 };
 
 const handleTargetLanguageChange = () => {
-  refreshGlossaryOptions({ preserveSelection: false });
-  setSelectedGlossary(els.glossarySelect.value, { updatePreview: true });
+  const { selected } = refreshGlossaryOptions({ preserveSelection: false, autoSelectFirst: true });
+  setSelectedGlossary(selected, { updatePreview: true });
 };
 
 const setStatus = (message = "", type = "info", duration = 3600) => {
