@@ -41,6 +41,20 @@
   background: white;
 }
 
+.fragment-block {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(53, 86, 240, 0.08);
+  margin-bottom: 12px;
+  background: rgba(53, 86, 240, 0.04);
+  cursor: pointer;
+  transition: border 0.2s ease;
+}
+
+.fragment-block:hover {
+  border-color: rgba(53, 86, 240, 0.4);
+}
+
 .viewer-sidebar {
   display: flex;
   flex-direction: column;

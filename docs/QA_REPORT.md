@@ -20,6 +20,7 @@
 | 9 | `POST /api/annotations` | `recordId=...`、术语问题标注 | ✅ 201 | 返回标注详情并更新历史记录 `annotations` 字段 |
 | 10 | `GET /api/annotations?recordId=...` | - | ✅ 200 | 核查最新标注列表，供前端加载 |
 | 11 | `POST /api/tts` | `text="..." voiceId=zh-CN-xiaoyi` | ✅ 200 | 返回音频 URL（无凭证走 Mock），前端 `<audio>` 可播放 |
+| 12 | `POST /api/webpage/fetch` | `url=https://example.com` | ✅ 200 | 抓取网页标题与正文片段，缓存命中时快速返回 |
 
 > 首次尝试使用 `model=deepseek-translate` 触发 400 `Model Not Exist`，已在日志中保留，用于提醒模型名称需与 DeepSeek 控制台保持一致。
 

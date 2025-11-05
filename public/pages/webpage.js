@@ -99,10 +99,31 @@ const renderPlaceholder = (text) => {
   els.viewerFrame.hidden = true;
 };
 
+const escapeHTML = (text = "") =>
+  text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
 const renderPage = ({ rawHtml }) => {
   const doc = els.viewerFrame.contentDocument || els.viewerFrame.contentWindow.document;
+  let htmlContent = rawHtml;
+  if (!htmlContent || !htmlContent.trim()) {
+    htmlContent = state.fragments
+      .map(
+        (fragment) =>
+          `<div class="fragment-block" data-fragment-id="${fragment.id}">${escapeHTML(fragment.text)}</div>`
+      )
+      .join("");
+    if (!htmlContent) {
+      htmlContent = '<p style="color:#7d8aa6;text-align:center;margin-top:40px;">未解析到正文内容，请复制文本后翻译。</p>';
+    }
+  }
+
   doc.open();
-  doc.write(`<!DOCTYPE html><html><head><style>body{font-family:Inter,system-ui,sans-serif;padding:24px;max-width:860px;margin:0 auto}</style></head><body>${rawHtml}</body></html>`);
+  doc.write(`<!DOCTYPE html><html><head><style>body{font-family:Inter,system-ui,sans-serif;padding:24px;max-width:860px;margin:0 auto;line-height:1.7;font-size:15px;color:#1a2233;background:#fff} h1,h2,h3{margin-top:24px}</style></head><body>${htmlContent}</body></html>`);
   doc.close();
   els.viewerPlaceholder.hidden = true;
   els.viewerFrame.hidden = false;
@@ -148,6 +169,14 @@ const attachSelectionHandlers = () => {
     if (!text) return;
     els.selectedText.value = text;
     setStatus("已填入选中的文本，可点击翻译", "info", 2500);
+  });
+  doc.querySelectorAll("[data-fragment-id]").forEach((node) => {
+    node.addEventListener("click", () => {
+      const text = node.textContent.trim();
+      if (!text) return;
+      els.selectedText.value = text;
+      setStatus("已选择段落，可点击翻译", "info", 2500);
+    });
   });
 };
 
