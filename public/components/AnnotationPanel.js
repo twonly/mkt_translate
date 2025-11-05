@@ -40,6 +40,13 @@ window.AnnotationPanel = (() => {
     { value: "critical", label: "阻断上线", color: "#e74c3c" }
   ];
 
+  const statusOptions = [
+    { value: "review", label: "待审核" },
+    { value: "approved", label: "已采纳" },
+    { value: "rejected", label: "已驳回" },
+    { value: "draft", label: "草稿" }
+  ];
+
   const tpl = `
     <section class="annotation-panel">
       <header class="annotation-header">
