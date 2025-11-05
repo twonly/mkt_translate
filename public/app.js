@@ -1048,7 +1048,7 @@ const init = async () => {
         }
       }
     });
-    AnnotationPanel.setRecord(null);
+    window.AnnotationPanel.setRecord(null);
   }
 
   try {
