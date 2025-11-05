@@ -41,10 +41,10 @@ const DEFAULT_CONFIG = {
   defaultTone: "专业且友好",
   defaultAudience: "目标受众",
   ttsVoices: [
-    { id: "zh-CN-xiaoyi", label: "中文 · Xiaoyi" },
-    { id: "zh-CN-xiaoduo", label: "中文 · Xiaoduo" },
-    { id: "ja-JP-nanami", label: "日语 · Nanami" },
-    { id: "en-US-sarah", label: "英语 · Sarah" }
+    { id: "moss_audio_ce44fc67-7ce3-11f0-8de5-96e35d26fb85", label: "中文 · 温柔女声" },
+    { id: "moss_audio_aaa1346a-7ce7-11f0-8e61-2e6e3c7ee85d", label: "中文 · 青年男声" },
+    { id: "Japanese_Whisper_Belle", label: "日语 · Belle" },
+    { id: "English_Graceful_Lady", label: "英文 · Graceful Lady" }
   ],
   evaluationPrompt: `你是资深翻译评审专家。综合原文和译文，从准确度、流畅度、语气一致性、术语与格式4个维度进行评分（1-5，保留一位小数），指出问题位置并给出改进建议。总结是否需要人工复核，输出JSON结构：
 {
