@@ -388,7 +388,8 @@ const apiFetch = async (url, options = {}) => {
     headers: {
       Accept: "application/json",
       ...(options.headers || {})
-    }
+    },
+    cache: "no-store"
   };
 
   if (options.body !== undefined) {
