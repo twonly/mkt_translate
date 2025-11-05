@@ -48,7 +48,15 @@ const els = {
   exportJsonBtn: document.getElementById("export-json-btn"),
   exportCsvBtn: document.getElementById("export-csv-btn"),
   annotationPanel: document.getElementById("annotation-panel"),
+  ttsVoiceSelect: document.getElementById("tts-voice"),
+  ttsPlayBtn: document.getElementById("tts-play-btn"),
+  ttsAudio: document.getElementById("tts-audio"),
   statusMessage: document.getElementById("status-message")
+};
+
+const ttsState = {
+  loading: false,
+  currentUrl: ""
 };
 
 const getGlossarySources = (record) =>
@@ -415,6 +423,7 @@ const populateConfig = (config) => {
   state.savedDefaults = config.savedDefaults || {};
   state.defaultPrompt =
     state.savedDefaults.promptTemplate || config.defaultPromptTemplate;
+  state.config.ttsVoices = config.ttsVoices || [];
 
   els.targetLanguage.innerHTML = config.languages
     .map(
@@ -437,6 +446,17 @@ const populateConfig = (config) => {
   els.tone.placeholder = config.defaultTone;
   els.audience.placeholder = config.defaultAudience;
   els.prompt.value = state.defaultPrompt;
+
+  if (els.ttsVoiceSelect) {
+    els.ttsVoiceSelect.innerHTML = state.config.ttsVoices.length
+      ? state.config.ttsVoices
+          .map(
+            (voice) =>
+              `<option value="${voice.id}">${escapeHTML(voice.label || voice.id)}</option>`
+          )
+          .join("")
+      : "<option value=\"\">默认音色</option>";
+  }
 
   applyDefaultsToForm(state.savedDefaults);
 };
@@ -558,6 +578,21 @@ const renderTranslation = () => {
     </div>
     ${glossaryListHtml}
   `;
+
+  if (els.ttsPlayBtn) {
+    els.ttsPlayBtn.disabled = !record.translation?.text;
+    els.ttsPlayBtn.textContent = ttsState.loading ? "朗读中..." : "朗读译文";
+  }
+
+  if (els.ttsAudio) {
+    if (ttsState.currentUrl) {
+      els.ttsAudio.src = ttsState.currentUrl;
+      els.ttsAudio.hidden = false;
+    } else {
+      els.ttsAudio.hidden = true;
+      els.ttsAudio.removeAttribute("src");
+    }
+  }
 };
 
 const renderEvaluation = () => {
@@ -1034,6 +1069,47 @@ const handleTranslationSelection = () => {
   });
 };
 
+const handleTtsPlay = async () => {
+  if (!state.currentRecord || ttsState.loading) {
+    return;
+  }
+  const text = state.currentRecord.translation?.text;
+  if (!text) {
+    setStatus("当前译文为空，无法朗读", "error", 4000);
+    return;
+  }
+  const voiceId = els.ttsVoiceSelect?.value || "";
+  ttsState.loading = true;
+  ttsState.currentUrl = "";
+  renderTranslation();
+  try {
+    const response = await apiFetch("/api/tts", {
+      method: "POST",
+      body: {
+        text,
+        voiceId
+      }
+    });
+    if (!response?.url) {
+      throw new Error("未获取到音频地址");
+    }
+    ttsState.currentUrl = response.url;
+    if (els.ttsAudio) {
+      els.ttsAudio.src = response.url;
+      els.ttsAudio.hidden = false;
+      els.ttsAudio.play().catch(() => {
+        /* autoplay may fail */
+      });
+    }
+    setStatus("译文朗读已生成", "success", 3000);
+  } catch (error) {
+    setStatus(error.message || "朗读生成失败", "error", 6000);
+  } finally {
+    ttsState.loading = false;
+    renderTranslation();
+  }
+};
+
 const init = async () => {
   if (els.annotationPanel) {
     window.AnnotationPanel.mount(els.annotationPanel);
@@ -1104,6 +1180,9 @@ els.glossaryPreviewBtn.addEventListener("click", () => {
 els.targetLanguage.addEventListener("change", handleTargetLanguageChange);
 els.translationResult.addEventListener("click", handleTranslationClick);
 els.translationResult.addEventListener("mouseup", handleTranslationSelection);
+if (els.ttsPlayBtn) {
+  els.ttsPlayBtn.addEventListener("click", handleTtsPlay);
+}
 
 els.historySearch.addEventListener("input", (event) => {
   state.filters.search = event.target.value;

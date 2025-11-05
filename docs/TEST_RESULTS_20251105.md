@@ -21,6 +21,7 @@
 | 9 | `PUT /api/annotations/:id` | 更新标注状态为 `approved` | 返回最新标注与历史记录 | ✅ |
 | 10 | `POST /api/annotations`（缺失 recordId） | 验证参数校验 | 返回 400 `recordId is required` | ✅ |
 | 11 | `GET /api/history/export?format=json` | 导出历史（采样前二十行） | 成功返回 JSON | ✅ |
+| 12 | `POST /api/tts` | 朗读译文（voice=zh-CN-xiaoyi） | 返回音频 URL；无凭证时使用 Mock 音频 | ✅ |
 
 ## 前端验证要点
 - 翻译后译文中命中术语（如「ブランドトーン」）带底色，并显示 tooltip「原文：品牌调性」。

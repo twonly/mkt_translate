@@ -446,6 +446,26 @@ button:not(:disabled):active {
   gap: 16px;
 }
 
+.tts-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tts-controls select {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: white;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.tts-controls audio {
+  width: 100%;
+}
+
 .placeholder {
   color: var(--text-muted);
 }

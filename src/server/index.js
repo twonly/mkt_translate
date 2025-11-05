@@ -30,6 +30,7 @@ const {
   createAnnotation,
   updateAnnotation
 } = require("./annotationStore");
+const { synthesizeSpeech } = require("./ttsService");
 const { logger, logRequest } = require("./logger");
 
 const app = express();
@@ -168,6 +169,36 @@ app.put("/api/history/:id/note", (req, res) => {
     return res.status(404).json({ error: "record not found" });
   }
   res.json({ record: updated });
+});
+
+app.post("/api/tts", async (req, res) => {
+  const { text, voiceId, speed, format } = req.body || {};
+  if (!text || !text.trim()) {
+    return res.status(400).json({ error: "text is required" });
+  }
+  try {
+    const result = await synthesizeSpeech({
+      text,
+      voiceId,
+      speed: typeof speed === "number" ? speed : 1.0,
+      format: format || "mp3"
+    });
+
+    logger.info("tts.success", {
+      voiceId,
+      durationMs: result.durationMs,
+      mock: result.mock
+    });
+
+    res.json({
+      url: result.url,
+      durationMs: result.durationMs || null,
+      mock: result.mock || false
+    });
+  } catch (error) {
+    logger.error("tts.error", { error: error.message });
+    res.status(500).json({ error: error.message || "TTS 生成失败" });
+  }
 });
 
 app.get("/api/history/export", (req, res) => {

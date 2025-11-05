@@ -114,10 +114,15 @@
         <div class="card">
           <div class="card-header">
             <h2>翻译结果</h2>
+            <div class="tts-controls">
+              <select id="tts-voice"></select>
+              <button id="tts-play-btn" class="ghost small" disabled>朗读译文</button>
+            </div>
           </div>
           <div id="translation-result" class="translation-result">
             <p class="placeholder">完成翻译后将在此展示译文。</p>
           </div>
+          <audio id="tts-audio" controls hidden></audio>
         </div>
 
         <div class="card">
