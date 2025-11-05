@@ -38,8 +38,9 @@ const formatAnnotation = (annotation) => ({
   suggestion: annotation.suggestion || "",
   linkedGlossaryEntryId: annotation.linkedGlossaryEntryId || null,
   createdBy: annotation.createdBy || "anonymous",
-  status: annotation.status || "draft",
+  status: annotation.status || "review",
   sources: annotation.sources || [],
+  syncGlossary: Boolean(annotation.syncGlossary),
   createdAt: annotation.createdAt || new Date().toISOString(),
   updatedAt: new Date().toISOString()
 });

@@ -1015,6 +1015,26 @@ const handleTranslationClick = (event) => {
   setStatus("已将术语添加到标注表单", "info", 3000);
 };
 
+const handleTranslationSelection = () => {
+  const selection = window.getSelection();
+  if (!selection || selection.isCollapsed) return;
+  const text = selection.toString().trim();
+  if (!text) return;
+  const anchor = selection.anchorNode;
+  const focus = selection.focusNode;
+  if (
+    !anchor ||
+    !focus ||
+    !els.translationResult.contains(anchor) ||
+    !els.translationResult.contains(focus)
+  ) {
+    return;
+  }
+  AnnotationPanel.setDraftContext({
+    segmentRef: `句段：${text}`
+  });
+};
+
 const init = async () => {
   if (els.annotationPanel) {
     AnnotationPanel.mount(els.annotationPanel);
@@ -1084,6 +1104,7 @@ els.glossaryPreviewBtn.addEventListener("click", () => {
 });
 els.targetLanguage.addEventListener("change", handleTargetLanguageChange);
 els.translationResult.addEventListener("click", handleTranslationClick);
+els.translationResult.addEventListener("mouseup", handleTranslationSelection);
 
 els.historySearch.addEventListener("input", (event) => {
   state.filters.search = event.target.value;

@@ -19,8 +19,10 @@ export const AnnotationPanel = (() => {
       description: "",
       suggestion: "",
       linkedGlossaryEntryId: null,
-      sources: []
-    }
+      sources: [],
+      syncGlossary: false
+    },
+    statusFilter: "all"
   };
 
   const issueTypeOptions = [
@@ -47,9 +49,25 @@ export const AnnotationPanel = (() => {
         </div>
         <div class="annotation-counter">
           <span class="badge">总计 <span data-role="total-count">0</span></span>
-          <span class="badge secondary">待审核 <span data-role="pending-count">0</span></span>
+          <span class="badge secondary">待处理 <span data-role="pending-count">0</span></span>
         </div>
       </header>
+
+      <div class="annotation-filters" data-role="status-filter">
+        <label class="chip">
+          <input type="radio" name="annot-status-filter" value="all" checked />
+          <span>全部</span>
+        </label>
+        ${statusOptions
+          .map(
+            (opt) => `
+            <label class="chip">
+              <input type="radio" name="annot-status-filter" value="${opt.value}" />
+              <span>${opt.label}</span>
+            </label>`
+          )
+          .join("")}
+      </div>
 
       <div class="annot-form">
         <div class="form-field">
@@ -127,7 +145,9 @@ export const AnnotationPanel = (() => {
     if (!container) return;
     const listEl = container.querySelector('[data-role="list"]');
     const total = state.annotations.length;
-    const pending = state.annotations.filter((item) => item.status !== "approved").length;
+    const pending = state.annotations.filter(
+      (item) => !["approved", "rejected"].includes(item.status)
+    ).length;
     container.querySelector('[data-role="total-count"]').textContent = total;
     container.querySelector('[data-role="pending-count"]').textContent = pending;
 
@@ -136,7 +156,17 @@ export const AnnotationPanel = (() => {
       return;
     }
 
-    listEl.innerHTML = state.annotations
+    const filtered =
+      state.statusFilter === "all"
+        ? state.annotations
+        : state.annotations.filter((item) => item.status === state.statusFilter);
+
+    if (!filtered.length) {
+      listEl.innerHTML = `<p class="placeholder">筛选条件下暂无标注。</p>`;
+      return;
+    }
+
+    listEl.innerHTML = filtered
       .map((item) => {
         const types = item.issueTypes
           .map(
@@ -161,7 +191,17 @@ export const AnnotationPanel = (() => {
               <span>建议：</span>${escapeHTML(item.suggestion || "——")}
             </p>
             <footer>
-              <span class="annotation-meta">状态：${item.status}</span>
+              <label class="annotation-meta status-control">
+                状态：
+                <select data-role="status-select" data-id="${item.id}">
+                  ${statusOptions
+                    .map(
+                      (opt) =>
+                        `<option value="${opt.value}" ${opt.value === item.status ? "selected" : ""}>${opt.label}</option>`
+                    )
+                    .join("")}
+                </select>
+              </label>
               <time>${new Date(item.updatedAt || item.createdAt || Date.now()).toLocaleString()}</time>
             </footer>
           </article>
@@ -179,7 +219,8 @@ export const AnnotationPanel = (() => {
       description: "",
       suggestion: "",
       linkedGlossaryEntryId: null,
-      sources: []
+      sources: [],
+      syncGlossary: false
     };
     container.querySelector('[data-role="segment-ref"]').value = "";
     container.querySelector('[data-role="description"]').value = "";
@@ -260,13 +301,16 @@ export const AnnotationPanel = (() => {
           description: formData.description,
           suggestion: formData.suggestion,
           linkedGlossaryEntryId: formData.linkedGlossaryEntryId,
-          sources: formData.sources
+          sources: formData.sources,
+          syncGlossary: formData.syncGlossary
         })
       });
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data?.error || "标注提交失败");
       }
+      // 默认将草稿标注状态提升为待审核
+      data.annotation.status = "review";
       state.annotations.push(data.annotation);
       renderList();
       resetForm();
@@ -300,6 +344,31 @@ export const AnnotationPanel = (() => {
     }
   };
 
+  const updateAnnotationStatus = async (id, status) => {
+    if (!id) return;
+    try {
+      const response = await fetch(`/api/annotations/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status })
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.error || "标注状态更新失败");
+      }
+      const index = state.annotations.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        state.annotations[index] = data.annotation;
+        renderList();
+        if (handlers.onSubmit) {
+          handlers.onSubmit(data);
+        }
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const bindEvents = () => {
     container.querySelector('[data-role="reset"]').addEventListener("click", (event) => {
       event.preventDefault();
@@ -308,6 +377,23 @@ export const AnnotationPanel = (() => {
     container.querySelector('[data-role="submit"]').addEventListener("click", (event) => {
       event.preventDefault();
       submitAnnotation();
+    });
+
+    container.querySelector('[data-role="status-filter"]').addEventListener("change", (event) => {
+      if (event.target.name === "annot-status-filter") {
+        state.statusFilter = event.target.value;
+        renderList();
+      }
+    });
+
+    container.querySelector('[data-role="list"]').addEventListener("change", (event) => {
+      const select = event.target.closest('[data-role="status-select"]');
+      if (!select) return;
+      const id = select.dataset.id;
+      const value = select.value;
+      updateAnnotationStatus(id, value).catch((error) => {
+        container.querySelector('[data-role="error"]').textContent = error.message;
+      });
     });
   };
 
@@ -318,13 +404,22 @@ export const AnnotationPanel = (() => {
     renderList();
   };
 
-const setRecord = (recordId, options = {}) => {
-  state.activeRecordId = recordId;
-  resetForm();
-  state.draft.sources = options.sources || [];
-  state.draft.linkedGlossaryEntryId = options.linkedGlossaryEntryId || null;
-  fetchAnnotations(recordId);
-};
+  const setRecord = (recordId, options = {}) => {
+    state.activeRecordId = recordId;
+    resetForm();
+    state.draft.sources = options.sources || [];
+    state.draft.linkedGlossaryEntryId = options.linkedGlossaryEntryId || null;
+    state.statusFilter = "all";
+    if (container) {
+      const filterAll = container.querySelector(
+        '[data-role="status-filter"] input[value="all"]'
+      );
+      if (filterAll) {
+        filterAll.checked = true;
+      }
+    }
+    fetchAnnotations(recordId);
+  };
 
   const appendDraftSource = (source) => {
     if (!state.draft.sources) {
@@ -368,3 +463,9 @@ const setRecord = (recordId, options = {}) => {
     state
   };
 })();
+  const statusOptions = [
+    { value: "draft", label: "草稿" },
+    { value: "review", label: "待审核" },
+    { value: "approved", label: "已采纳" },
+    { value: "rejected", label: "已驳回" }
+  ];
