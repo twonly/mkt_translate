@@ -1,5 +1,3 @@
-import { AnnotationPanel } from "./components/AnnotationPanel.js";
-
 const state = {
   config: null,
   history: [],
@@ -323,7 +321,7 @@ const renderGlossaryPreview = async (glossaryId) => {
 const setActiveRecord = (record) => {
   state.currentRecord = record || null;
   const sources = getGlossarySources(record);
-  AnnotationPanel.setRecord(record ? record.id : null, { sources });
+  window.AnnotationPanel.setRecord(record ? record.id : null, { sources });
 };
 
 const setSelectedGlossary = (glossaryId, { updatePreview = true } = {}) => {
@@ -1007,8 +1005,8 @@ const handleTranslationClick = (event) => {
   if (!mark) return;
   const sourceText = mark.dataset.source || mark.textContent.trim();
   const primarySource = sourceText.split(" / ")[0];
-  AnnotationPanel.appendDraftSource(primarySource);
-  AnnotationPanel.setDraftContext({
+  window.AnnotationPanel.appendDraftSource(primarySource);
+  window.AnnotationPanel.setDraftContext({
     segmentRef: `术语：${mark.textContent.trim()}`,
     source: primarySource
   });
@@ -1030,15 +1028,15 @@ const handleTranslationSelection = () => {
   ) {
     return;
   }
-  AnnotationPanel.setDraftContext({
+  window.AnnotationPanel.setDraftContext({
     segmentRef: `句段：${text}`
   });
 };
 
 const init = async () => {
   if (els.annotationPanel) {
-    AnnotationPanel.mount(els.annotationPanel);
-    AnnotationPanel.registerHandlers({
+    window.AnnotationPanel.mount(els.annotationPanel);
+    window.AnnotationPanel.registerHandlers({
       onSubmit: ({ record }) => {
         if (record) {
           upsertHistory(record);

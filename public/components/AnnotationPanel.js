@@ -1,4 +1,4 @@
-export const AnnotationPanel = (() => {
+window.AnnotationPanel = (() => {
   const escapeHTML = (text = "") =>
     text
       .replace(/&/g, "&amp;")
