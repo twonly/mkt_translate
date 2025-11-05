@@ -1,0 +1,58 @@
+.layout-webpage {
+  grid-template-columns: 2fr 1fr;
+}
+
+.webpage-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fetch-bar {
+  display: flex;
+  gap: 12px;
+}
+
+.fetch-bar input {
+  flex: 1;
+}
+
+.viewer-container {
+  position: relative;
+  flex: 1;
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(53, 86, 240, 0.12);
+  background: white;
+  overflow: hidden;
+}
+
+.viewer-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+}
+
+.viewer-container iframe {
+  width: 100%;
+  height: 70vh;
+  border: none;
+  background: white;
+}
+
+.viewer-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sidebar-form {
+  gap: 16px;
+}
+
+.sidebar-actions {
+  display: flex;
+  gap: 12px;
+}
+*** End Patch

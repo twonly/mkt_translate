@@ -31,6 +31,7 @@ const {
   updateAnnotation
 } = require("./annotationStore");
 const { synthesizeSpeech } = require("./ttsService");
+const { fetchWebpage } = require("./webpage/fetcher");
 const { logger, logRequest } = require("./logger");
 
 const app = express();
@@ -525,6 +526,51 @@ ${translated}`;
       error.message ||
       "evaluation failed";
     res.status(500).json({ error: message });
+  }
+});
+
+app.post("/api/tts", async (req, res) => {
+  const { text, voiceId, speed, format } = req.body || {};
+  if (!text || !text.trim()) {
+    return res.status(400).json({ error: "text is required" });
+  }
+  try {
+    const result = await synthesizeSpeech({
+      text,
+      voiceId,
+      speed: typeof speed === "number" ? speed : 1.0,
+      format
+    });
+
+    logger.info("tts.success", {
+      voiceId,
+      durationMs: result.durationMs,
+      mock: result.mock
+    });
+
+    res.json({
+      url: result.url,
+      durationMs: result.durationMs || null,
+      mock: result.mock || false
+    });
+  } catch (error) {
+    logger.error("tts.error", { error: error.message });
+    res.status(500).json({ error: error.message || "TTS 生成失败" });
+  }
+});
+
+app.post("/api/webpage/fetch", async (req, res) => {
+  const { url, selector } = req.body || {};
+  if (!url || !url.trim()) {
+    return res.status(400).json({ error: "url is required" });
+  }
+  try {
+    logger.info("webpage.fetch.request", { url });
+    const result = await fetchWebpage({ url: url.trim(), rootSelector: selector });
+    res.json(result);
+  } catch (error) {
+    logger.error("webpage.fetch.error", { error: error.message, url });
+    res.status(500).json({ error: error.message || "webpage fetch failed" });
   }
 });
 

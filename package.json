@@ -14,16 +14,20 @@
   "type": "commonjs",
   "dependencies": {
     "axios": "^1.13.1",
+    "cheerio": "^1.1.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-rate-limit": "^8.2.1",
     "helmet": "^8.1.0",
     "morgan": "^1.10.1",
+    "node-cache": "^5.1.2",
+    "normalize-url": "^8.1.0",
     "uuid": "^13.0.0",
     "winston": "^3.18.3"
   },
   "devDependencies": {
+    "eslint": "^9.39.1",
     "nodemon": "^3.1.10"
   }
 }

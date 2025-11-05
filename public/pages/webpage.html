@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>官网翻译工作台</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./webpage.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <div>
+        <h1>官网翻译工作台</h1>
+        <p class="subtitle">抓取官网内容 → 圈选段落 → 翻译确认</p>
+      </div>
+      <div class="status" id="status-message"></div>
+    </header>
+
+    <main class="layout layout-webpage">
+      <section class="webpage-viewer">
+        <form id="fetch-form" class="fetch-bar">
+          <input
+            type="url"
+            id="web-url"
+            placeholder="输入要抓取的网页地址，例如 https://example.com"
+            required
+          />
+          <button type="submit" id="fetch-btn" class="primary">抓取网页</button>
+        </form>
+        <div class="viewer-container">
+          <div class="viewer-placeholder" id="viewer-placeholder">请输入网址并抓取页面。</div>
+          <iframe id="viewer-frame" hidden></iframe>
+        </div>
+      </section>
+
+      <section class="viewer-sidebar">
+        <div class="card">
+          <div class="card-header">
+            <h2>翻译配置</h2>
+          </div>
+          <form id="sidebar-form" class="form sidebar-form">
+            <label class="form-field">
+              <span>自动识别内容</span>
+              <textarea id="selected-text" rows="6" placeholder="在左侧圈选内容后会自动填入" required></textarea>
+            </label>
+            <div class="form-grid">
+              <label class="form-field">
+                <span>目标语言</span>
+                <select id="sidebar-target-language"></select>
+              </label>
+              <label class="form-field">
+                <span>翻译模型</span>
+                <select id="sidebar-model"></select>
+              </label>
+              <label class="form-field">
+                <span>术语库</span>
+                <select id="sidebar-glossary">
+                  <option value="">不使用术语库</option>
+                </select>
+              </label>
+            </div>
+            <div class="sidebar-actions">
+              <button type="button" id="translate-selection" class="primary">翻译选中内容</button>
+              <button type="button" id="translate-full" class="ghost">翻译整页正文</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>翻译结果</h2>
+          </div>
+          <div id="sidebar-result" class="translation-result">
+            <p class="placeholder">翻译后将在此展示译文。</p>
+          </div>
+          <audio id="sidebar-tts" controls hidden></audio>
+        </div>
+      </section>
+    </main>
+
+    <script src="../components/AnnotationPanel.js"></script>
+    <script src="./webpage.js"></script>
+  </body>
+</html>
